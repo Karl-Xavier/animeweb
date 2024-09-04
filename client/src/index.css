@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mainCol{
+  background: #1c1c28;
+  color: #e0e0e0;
+}
+
+colo{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  
+}
