@@ -1,0 +1,101 @@
+import React, { useEffect, useState } from 'react'
+import './styles/home.css'
+
+export default function HomeSkeleton() {
+
+    function getStyles(){
+        const screen = window.innerWidth
+        const breakPoint = 768
+        if(screen > breakPoint){
+            return styles.bigScreen
+        }else if(screen < breakPoint){
+            return styles.smScreen
+        }else{
+            return styles.midScreen
+        }
+    }
+
+    const [currentStyles, setCurrentStyles] = useState(getStyles())
+
+    useEffect(()=>{
+        function handleResize(){
+            setCurrentStyles(getStyles())
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return ()=>{
+            window.removeEventListener('resize', handleResize)
+        }
+    },[])
+
+  return (
+    <div>
+        <div className="my-3 w-full" style={currentStyles}>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+const styles = {
+    thumbnail:{
+        width: '100%',
+        height: '75%',
+        background: '#3b3b3b',
+        borderRadius: '5px'
+    },
+    title:{
+        width: '100%',
+        height: '20px',
+        background: '#3b3b3b',
+        margin: '10px 0 0 0',
+        borderRadius: '5px'
+    },
+    bigScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '12px'
+    },
+    midScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '12px'
+    },
+    smScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '8px'
+    }
+}

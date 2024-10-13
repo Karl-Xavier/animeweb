@@ -1,69 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import axios from 'axios'
-import { DownloadSimple } from 'phosphor-react'
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { DownloadSimple } from 'phosphor-react';
+import Video from '../Video';
 
 export default function Content() {
-    const { episode } = useParams()
-    const [ animeDetails, setAnimeDetails ] = useState(null)
-    // Media Query //
-        function getStyles() {
-            const screen = window.innerWidth
-            const breakpoint = 600
-            if(screen > breakpoint){
-                return styles.videoLarge
-            }
-            return styles.video
-        }
-        const [currentStyles, setCurrentStyles] = useState(getStyles())
-        useEffect(()=>{
-            function handleResize(){
-                setCurrentStyles(getStyles())
-            }
-            window.addEventListener('resize', handleResize)
-            return () => window.removeEventListener('resize', handleResize)
-        },[])
-    // End //
+    const { epLink } = useParams(); // Get the full episode link from params
+    const [animeDetails, setAnimeDetails] = useState(null);
 
-    useEffect(()=>{
-        async function fetchAnimeDetails(){
-            try{
-                const response = await axios.get(`http://localhost:5003/${episode}`)
-                setAnimeDetails(response.data)
-                console.log(response.data)
-            } catch(err) {
-                console.log(err)
-            }
+    // Function to extract anime name and episode number
+    function parseEpisodeLink(link) {
+        if (typeof link !== 'string') {
+            console.error('Link is not a string:', link);
+            return { animeName: '', episodeNumber: '' }; // Return default values or handle error
         }
-        fetchAnimeDetails()
-    },[episode])
-    console.log(`http://localhost:5003/${episode}`)
+        
+        const parts = link.split('-');
+        const episodeNumber = parts.pop(); // Get the last part as the episode number
+        const animeName = parts.join('-').replace(/-episode$/, ''); // Join the remaining parts back into the anime name
+        return { animeName, episodeNumber };
+    }
 
-  return (
-    <div className='container my-3'>
-        <h2 style={styles.h2}>Demon Slayer</h2>
-        <video controls style={currentStyles}>
-            <source src="https://s3taku.com/abpl1245?id=NjQxNzE=&title=Overlord+Episode+2&typesub=SUB" type="video/mp4"/>
-        </video>
-        <div className='prev-next' style={styles.prevNext}>
-            <Link>Back To Episode 1</Link>
-            <Link>Go To Episode 2</Link>
+// Fetch anime details
+useEffect(() => {
+    async function fetchAnimeDetails() {
+        try {
+            const { animeName, episodeNumber } = parseEpisodeLink(epLink);
+            
+            // Construct the API URL correctly
+            const response = await axios.get(`http://localhost:5003/api/${animeName}/${episodeNumber}`);
+            
+            setAnimeDetails(response.data);
+            console.log(response.data);
+            console.log(`http://localhost:5003/api/${animeName}/${episodeNumber}`);
+        } catch (err) {
+            console.error('Error fetching anime details:', err);
+        }
+    }
+    fetchAnimeDetails();
+}, [epLink])
+
+function handleEpisodeClick(link) {
+    navigate(`/episode/${link}`); // Navigate to the new episode page
+}
+
+    return (
+        <div className='container my-3'>
+            {animeDetails ? (
+                <div className='grid place-content-center w-full'>
+                    <h2 style={styles.h2}>{animeDetails.title}</h2>
+                    {/* <iframe src={animeDetails.videoSRC} allowfullscreen></iframe> */}
+                    <Video video={animeDetails.videoSRC}/>
+                    <div className='prev-next' style={styles.prevNext}>
+                        {animeDetails.prev && <Link to={animeDetails.prev}>Back</Link>}
+                        {animeDetails.next && <Link to={animeDetails.next}>Next</Link>}
+                    </div>
+                    {/* <section style={styles.downloadDiv} className="download">
+                        <header style={{ margin: '0 0 10px 0', fontWeight: '500', fontSize: '1.2rem' }}>
+                            <h3>Available Links</h3>
+                        </header>
+                        <a href={animeDetails.downloadLinks[0].url} download>
+                        <button style={styles.downloadBtn}>640 X 360<DownloadSimple weight='fill' size={24}/></button>
+                        </a>
+                        <button style={styles.downloadBtn}>850 X 480<DownloadSimple weight='fill' size={24}/></button>
+                        <button style={styles.downloadBtn}>1020 X 720<DownloadSimple weight='fill' size={24}/></button>
+                        <button style={styles.downloadBtn}>1920 X 1080<DownloadSimple weight='fill' size={24}/></button>
+                    </section> */}
+                    <a href={animeDetails.downloadLink}>Download</a>
+                </div>
+            ) : (
+                <div>Loading....</div>
+            )}
         </div>
-        <section style={styles.downloadDiv} className="download">
-            <header style={{
-                margin: '0 0 10px 0',
-                fontWeight : '500',
-                fontSize: '1.2rem'
-            }}>
-                <h3>Available Links</h3>
-            </header>
-            <button style={styles.downloadBtn}>640 X 360<DownloadSimple weight='fill' size={24}/></button>
-            <button style={styles.downloadBtn}>850 X 480<DownloadSimple weight='fill' size={24}/></button>
-            <button style={styles.downloadBtn}>1020 X 720<DownloadSimple weight='fill' size={24}/></button>
-            <button style={styles.downloadBtn}>1920 X 1080<DownloadSimple weight='fill' size={24}/></button>
-        </section>
-    </div>
-  )
+    );
 }
 
 const styles = {
@@ -77,44 +86,5 @@ const styles = {
         margin: '0 0 10px 0',
         display: 'inline-block'
     },
-    video: {
-        width: '100%',
-        height: '220px',
-        margin: '0 0 10px 0'
-    },
-    videoLarge: {
-        width: '100%',
-        height: '400px',
-        margin: '0 0 10px 0'
-    },
-    prevNext: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '5px',
-        color: '#6167ff',
-        textDecoration: 'underline',
-        margin: '0 0 10px 0'
-    },
-    downloadDiv: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    downloadBtn: {
-        width: '60%', 
-        background: 'linear-gradient(270deg,#6167ff,#ee49fd)',
-        margin: '0 0 10px 0',
-        borderRadius: '5px',
-        fontWeight: 'bold',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '10px'
-    }
-}
+    // Add other styles...
+};

@@ -4,8 +4,36 @@ import axios from 'axios'
 import { XCircle } from 'phosphor-react'
 import Loader from '../Loader'
 import Err from '../Err'
+import HomeSkeleton from '../Skeleton/HomeSkeleton'
 
 export default function Content() {
+
+    function getStyles(){
+        const screen = window.innerWidth
+        const breakPoint = 768
+        if(screen > breakPoint){
+            return styles.bigScreen
+        }else if(screen < breakPoint){
+            return styles.smScreen
+        }else{
+            return styles.midScreen
+        }
+    }
+
+    const [currentStyles, setCurrentStyles] = useState(getStyles())
+
+    useEffect(()=>{
+        function handleResize(){
+            setCurrentStyles(getStyles())
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return ()=>{
+            window.removeEventListener('resize', handleResize)
+        }
+    },[])
+
     const [recentEpisode, setRecentEpisode] = useState([])
     const [ err, setErr ] = useState(null)
     const [ loading, setLoading ] = useState(true)
@@ -17,7 +45,7 @@ export default function Content() {
     useEffect(()=>{
         async function fetchNewData(){
             try{
-                const response = await axios.get('http://localhost:5003/recent')
+                const response = await axios.get('http://localhost:5003/api/recent')
                 setRecentEpisode(response.data)
                 setLoading(false)
                 setErr(null)
@@ -39,7 +67,7 @@ export default function Content() {
 
     if(loading){
         return(
-            <Loader/>
+            <HomeSkeleton/>
         )
     }
     if(err){
@@ -48,13 +76,16 @@ export default function Content() {
         )
     }
 
+    console.log('hello')
+
   return (
     <div className='container'>
         <h3><strong>RECENT RELEASE</strong></h3>
-        <div className="row my-3">
+        {/* <iframe src="https://s3taku.com/streaming.php?id=MjE5MDUx&title=Kingdom+5th+Season+%28Chinese+Name%29+Episode+1&typesub=SUB" width="800" height="450" allow="autoplay; fullscreen" allowfullscreen></iframe> */}
+        <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
-                 <div key={index} className="col-lg-3 col-md-4 col-6 mb-3 text-center">
+                 <div key={index} className="w-36 h-64 lg:w-48 md:w-44 text-center">
                    <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid rounded-xl" />
                    <p style={styles.title}>{episode.title}</p>
                    <span style={styles.episode}>{episode.episodeNum}</span>
@@ -70,9 +101,10 @@ export default function Content() {
 }
 
 const styles = {
-    img: {
+    img:{
         width: '100%',
-        height: '280px',
+        height: '75%',
+        borderRadius: '5px',
         objectFit: 'cover'
     },
     episode: {
@@ -86,5 +118,20 @@ const styles = {
         overflow: 'hidden',
         color: '#6167ff',
         fontWeight: '600'
+    },
+    bigScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '12px'
+    },
+    midScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '12px'
+    },
+    smScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '8px'
     }
 }

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import Err from '../Err'
-import Loader from '../Loader'
-import { MaskSad, WifiSlash, XCircle } from 'phosphor-react'
+import HomeSkeleton from '../Skeleton/HomeSkeleton'
 
 export default function Content() {
     const { genre } = useParams()
@@ -11,28 +10,16 @@ export default function Content() {
     const [ loading, setLoading ] = useState(true)
     const [err, setErr] = useState(null)
 
-    const netErr = axios.AxiosError.ERR_NETWORK
-    const wrong = axios.AxiosError.ERR_BAD_REQUEST
-    const invalid = axios.AxiosError.ERR_INVALID_URL
-
     useEffect(()=>{
        async function fetchData(){
         try {
-            const response = await axios.get(`http://localhost:5003/genre/${genre}`)
+            const response = await axios.get(`http://localhost:5003/api/genre/${genre}`)
             setResult(response.data)
             setLoading(false)
             setErr(null)
         } catch (error) {
             console.log('Error', error)
             setLoading(false)
-            if(netErr){
-                setErr('No Stable Internet')
-                return
-            } else if (wrong){
-                setErr('Something Went Wrong')
-            } else if(invalid){
-                setErr('No Such genre')
-            }
         }
        }
        fetchData()
@@ -40,7 +27,7 @@ export default function Content() {
 
     if(loading){
         return(
-            <Loader/>
+            <HomeSkeleton/>
         )
     }
     if(err){

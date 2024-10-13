@@ -24,6 +24,7 @@ export default function Content() {
             setErr('Something went wrong')
         }
     }
+    
 
   return (
     <div className='container'>

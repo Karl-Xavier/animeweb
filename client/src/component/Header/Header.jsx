@@ -18,7 +18,7 @@ export default function Header() {
             <h1 style={styles.header.h1}>MyAnime_TV</h1>
             </Link>
             {!searchPage && <Link to={'/searchpage'}>
-                <p style={styles.search}>Search By Name <span><MagnifyingGlass weight='bold' size={22}/></span></p>
+                <MagnifyingGlass weight='bold' size={22}/>
             </Link>}
             <SmallNav/>
         </header>

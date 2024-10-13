@@ -12,6 +12,7 @@ import GenreResult from './pages/GenreResult/GenreResult'
 import Category from './pages/Category/Category'
 import SearchPage from './pages/SearchPage/SearchPage'
 import CateCon from './pages/CateCon/CateCon'
+import CategorySkel from './component/Skeleton/CategorySkel'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -36,7 +37,8 @@ function App() {
             <Route path='/genre/:genre' element={<GenreResult/>}/>
             <Route path='/category/:name' element={<Category/>}/>
             <Route path='/searchpage' element={<SearchPage/>}/>
-            <Route path='/:episode' element={<CateCon/>}/>
+            <Route path='/:epLink' element={<CateCon/>}/>
+            <Route path='/homeskel' element={<CategorySkel/>}/>
           </Routes>
         </div>
       </div>
