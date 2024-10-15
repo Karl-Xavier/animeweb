@@ -28,6 +28,7 @@ function App() {
       </div>
       <div style={isNavOpen ? styles.mainContentOpen : styles.mainContentClosed} className='container'>
         <Header/>
+        <Adsense/>
         <div>
           <Routes>
             <Route path='/' element={<Home/>}/>
@@ -39,7 +40,6 @@ function App() {
             <Route path='/feed' element={<News/>}/>
             <Route path='/*' element={<Err/>}/>
           </Routes>
-          <Adsense/>
         </div>
       </div>
     </div>
