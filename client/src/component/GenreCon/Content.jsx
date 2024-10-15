@@ -40,7 +40,7 @@ export default function Content() {
     useEffect(()=>{
        async function fetchData(){
         try {
-            const response = await axios.get(`http://localhost:5003/api/genre/${genre}`)
+            const response = await axios.get(`https://animeweb-orcin.vercel.app/api/genre/${genre}`)
             setResult(response.data)
             setLoading(false)
             setErr(null)

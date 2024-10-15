@@ -39,7 +39,7 @@ useEffect(()=>{
   useEffect(()=>{
     async function fetchAllMovies(){
       try {
-        const response = await axios.get('http://localhost:5003/api/movies')
+        const response = await axios.get('https://animeweb-orcin.vercel.app/api/movies')
         setMovies(response.data)
         setLoading(false)
         setErr(null)

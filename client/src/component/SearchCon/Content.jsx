@@ -40,10 +40,9 @@ export default function Content() {
     async function handleSearch(e){
         e.preventDefault()
         try{
-            const response = await axios.get(`http://localhost:5003/search/${searchQuery}`)
+            const response = await axios.get(`https://animeweb-orcin.vercel.app/search/${searchQuery}`)
             setLoading(false)
             setAnimeRes(response.data)
-            console.log(response.data)
         } catch(err){
             console.log('Error',err)
             setLoading(false)

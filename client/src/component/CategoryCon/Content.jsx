@@ -39,7 +39,7 @@ export default function Content() {
         async function fetchResults(){
             try {
                 const trimmedName = name.startsWith('/') ? name.substring(1) : name;
-                const response = await axios.get(`http://localhost:5003/api/category/${trimmedName}`)
+                const response = await axios.get(`https://animeweb-orcin.vercel.app/api/category/${trimmedName}`)
                 setAnimeInfo(response.data)
             } catch (err){
                 console.log('Error', err)

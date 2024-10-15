@@ -40,7 +40,7 @@ export default function Content() {
     useEffect(()=>{
         async function fetchNewData(){
             try{
-                const response = await axios.get('http://localhost:5003/api/recent')
+                const response = await axios.get('https://animeweb-orcin.vercel.app/api/recent')
                 setRecentEpisode(response.data)
                 setLoading(false)
                 setErr(null)

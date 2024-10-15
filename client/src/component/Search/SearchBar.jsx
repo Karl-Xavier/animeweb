@@ -2,7 +2,7 @@ import { MagnifyingGlass } from 'phosphor-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function SearchBar({ handleExpand, setIsExpanded, setIsNavOpen }) {
+export default function SearchBar({ handleExpand }) {
     const navigate = useNavigate()
 
     const [ genre, setGenre ] = useState('')

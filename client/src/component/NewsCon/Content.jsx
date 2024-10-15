@@ -56,7 +56,7 @@ useEffect(()=>{
   useEffect(()=>{
     async function fetchNews(){
       try {
-        const response = await axios.get('http://localhost:5003/api/feeds')
+        const response = await axios.get('https://animeweb-orcin.vercel.app/api/feeds')
         setNews(response.data.articles)
         setLoading(false)
         setErr(null)
