@@ -14,8 +14,9 @@ async function fetchEpisodes(maxPages) {
             const title = $(element).find('p.name a').text()
             const episodeNum = $(element).find('p.episode').text()
             const imgURL = $(element).find('div.img a img').attr('src')
+            const link = $(element).find('div.img a').attr('href')
 
-            allEpisodes.push({ title, imgURL, episodeNum, })
+            allEpisodes.push({ title, imgURL, episodeNum, link })
         })
         console.log(`Page ${page} processed.`)
     }

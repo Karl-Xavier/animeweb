@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
 import Err from '../Err'
 import HomeSkeleton from '../Skeleton/HomeSkeleton'
+import { Link } from 'react-router-dom'
 
 export default function Content() {
 
@@ -72,11 +73,13 @@ export default function Content() {
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
-                 <div key={index} className="w-44 h-64 lg:w-48 md:w-44 text-center">
+                 <Link to={episode.link} key={index}>
+                    <div className="w-44 h-64 lg:w-48 md:w-44 text-center">
                    <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid rounded-xl" />
                    <p style={styles.title}>{episode.title}</p>
                    <span style={styles.episode}>{episode.episodeNum}</span>
                  </div>
+                 </Link>
                 )
             })}
         </div>
