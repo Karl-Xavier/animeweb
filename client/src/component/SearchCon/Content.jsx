@@ -64,7 +64,7 @@ export default function Content() {
         <div className='my-3' style={currentStyles}>
         {animeRes.map((anime, index)=>{
              return (
-                <div key={index} className="w-44 h-64 lg:w-48 md:w-44 text-center">
+                <div key={index} className="w-40 h-64 lg:w-48 md:w-44 text-center">
                     <Link to={anime.link}>
                         <img src={anime.imgURL} alt={anime.title} className='img-fluid rounded' style={styles.img}/>
                         <h3 style={styles.title}>{anime.title}</h3>

@@ -32,63 +32,63 @@ export default function HomeSkeleton() {
   return (
     <div className='container grid place-content-center'>
         <div className="my-3 w-full" style={currentStyles}>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>
-            <div className="w-36 h-52 lg:w-48 md:w-44">
+            <div className="w-40 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
             </div>

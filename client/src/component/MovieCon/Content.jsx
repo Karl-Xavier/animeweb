@@ -72,7 +72,7 @@ if(err){
         <div className="my-3" style={currentStyles}>
             {movies.map((movie, index) => {
                 return (
-                 <div key={index} className="w-44 h-64 lg:w-48 md:w-44 text-center">
+                 <div key={index} className="w-40 h-64 lg:w-48 md:w-44 text-center">
                    <Link to={movie.link}>
                    <img style={styles.img} src={movie.imgURL} alt="" className="img-fluid rounded-xl" />
                    <p style={styles.title}>{movie.title}</p>

@@ -12,6 +12,7 @@ import SearchPage from './pages/SearchPage/SearchPage'
 import CateCon from './pages/CateCon/CateCon'
 import News from './pages/News/News'
 import Err from './pages/404'
+import Adsense from './component/Adsense'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -38,6 +39,7 @@ function App() {
             <Route path='/feed' element={<News/>}/>
             <Route path='/*' element={<Err/>}/>
           </Routes>
+          <Adsense/>
         </div>
       </div>
     </div>

@@ -74,7 +74,7 @@ export default function Content() {
             {recentEpisode.map((episode, index) => {
                 return (
                  <Link to={episode.link} key={index}>
-                    <div className="w-44 h-64 lg:w-48 md:w-44 text-center">
+                    <div className="w-40 h-64 lg:w-48 md:w-44 text-center">
                    <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid rounded-xl" />
                    <p style={styles.title}>{episode.title}</p>
                    <span style={styles.episode}>{episode.episodeNum}</span>
