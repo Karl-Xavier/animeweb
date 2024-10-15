@@ -28,7 +28,7 @@ function App() {
       </div>
       <div style={isNavOpen ? styles.mainContentOpen : styles.mainContentClosed} className='container'>
         <Header/>
-        <Adsense/>
+        {/* <Adsense/> */}
         <div>
           <Routes>
             <Route path='/' element={<Home/>}/>
