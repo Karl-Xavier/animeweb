@@ -1,4 +1,4 @@
-import { CalendarCheck, FilmSlate, House, List, Star, X } from 'phosphor-react'
+import { CalendarCheck, FilmSlate, House, List, Newspaper, Star, X } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import SearchBar from '../Search/SearchBar'
@@ -12,8 +12,7 @@ export default function SmallNav() {
   useEffect(()=>{},[location])
 
   const homeRoute = location.pathname === '/'
-  const popularRoute = location.pathname.startsWith('/popular')
-  const newRoute = location.pathname.startsWith('/newseason')
+  const newRoute = location.pathname.startsWith('/feed')
   const movieRoute = location.pathname.startsWith('/movies')
 
   function toggleNavVisibility(){
@@ -30,7 +29,7 @@ export default function SmallNav() {
       left: 0,
       height: '100dvh',
       width: !isExpanded ? '70%' : '100%',
-      background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+      background: '#2a2a3d',
       overflowX: 'hidden',/* 
       transform: 'translateX(-260px)', */
       transition: 'width 0.3s ease', 
@@ -90,20 +89,14 @@ export default function SmallNav() {
               <li onClick={()=>{
                 setIsNavOpen(false)
                 setIsExpanded(false)
-                }} style={{...styles.li, background: popularRoute ? '#f9f9f9' : 'transparent', color: popularRoute ? '#242424' : 'inherit'}} >
-                <Link style={styles.link} to={'/popular'}>Popular <Star size={24} weight='fill'/></Link>
+                }} style={{...styles.li, background: movieRoute ? '#f9f9f9' : 'transparent', color: movieRoute ? '#242424' : 'inherit'}}>
+                <Link style={styles.link} to={'/movies'}>Movies <FilmSlate size={24} weight='fill'/></Link>
               </li>
               <li onClick={()=>{
                 setIsNavOpen(false)
                 setIsExpanded(false)
                 }} style={{...styles.li, background: newRoute ? '#f9f9f9' : 'transparent', color: newRoute ? '#242424' : 'inherit'}}>
-                <Link style={styles.link} to={'/newseason'}>New Release <CalendarCheck size={24} weight='fill'/></Link>
-              </li>
-              <li onClick={()=>{
-                setIsNavOpen(false)
-                setIsExpanded(false)
-                }} style={{...styles.li, background: movieRoute ? '#f9f9f9' : 'transparent', color: movieRoute ? '#242424' : 'inherit'}}>
-                <Link style={styles.link} to={'/movies'}>Movies <FilmSlate size={24} weight='fill'/></Link>
+                <Link style={styles.link} to={'/feed'}>News <Newspaper size={24} weight='fill'/></Link>
               </li>
           </ul>
         </div>

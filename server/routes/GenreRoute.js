@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const FetchHTML = require('../fetch')
-const {webURL} = require('../url')
+const webURL = require('../url')
 const axios = require('axios')
 
 async function fetchGenre(genre, maxPages) {
@@ -27,7 +27,7 @@ async function fetchGenre(genre, maxPages) {
 
 router.get('/genre/:name', async (req, res) => {
     const genre = req.params.name
-    const maxPages = parseInt(req.query.maxPages) || 20
+    const maxPages = parseInt(req.query.maxPages) || 7
 
     console.log(`Fetching genre: ${genre} with maxPages: ${maxPages}`)
 

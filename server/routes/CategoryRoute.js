@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const FetchHTML = require('../fetch')
-const {webURL} = require('../url')
+const webURL = require('../url')
 const axios = require('axios')
 const cheerio = require('cheerio')
 

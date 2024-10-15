@@ -14,12 +14,12 @@ export default function SearchBar({ handleExpand, setIsExpanded, setIsNavOpen })
         }
     }
 
-  return (
-    <form onSubmit={(e)=> {
-      setIsNavOpen(false)
-      setIsExpanded(false)
+    function allSearchFuncton(e){
       handleSearch(e)
-    }} style={styles.searchbar}>
+    }
+
+  return (
+    <form onSubmit={allSearchFuncton} style={styles.searchbar}>
       <input style={styles.input} type="text" value={genre} onChange={(e) => setGenre(e.target.value)} placeholder='Search By Genre e.g action' onClick={handleExpand}/>
       <button style={styles.searchBtn} type='submit'><MagnifyingGlass weight='bold' size={24}/></button>
     </form>

@@ -17,10 +17,12 @@ export default function Header() {
             <Link to={'/'}>
             <h1 style={styles.header.h1}>MyAnime_TV</h1>
             </Link>
+            <div className='flex flex-row items-center gap-9'>
             {!searchPage && <Link to={'/searchpage'}>
                 <MagnifyingGlass weight='bold' size={22}/>
             </Link>}
             <SmallNav/>
+            </div>
         </header>
     </div>
   )
@@ -37,7 +39,8 @@ const styles = {
         h1:{
             fontWeight: '500',
             fontSize: '1.4rem',
-            userSelect: 'none'
+            userSelect: 'none',
+            color: '#ee49fd'
         }
     },
     search: {

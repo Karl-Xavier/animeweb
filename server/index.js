@@ -1,8 +1,7 @@
 const express = require('express')
-const axios = require('axios')
 const cors = require('cors')
 const FetchHTML = require('./fetch')
-const {webURL} = require('./url')
+const webURL = require('./url')
 
 const app = express()
 const PORT = process.env.PORT || 5003
@@ -13,6 +12,8 @@ const homeRoute = require('./routes/HomeRoute')
 const genreRoute = require('./routes/GenreRoute')
 const cateRoute = require('./routes/CategoryRoute')
 const nameRoute = require('./routes/Name')
+const newsRoute = require('./routes/News')
+const movieRoute = require('./routes/Movies')
 
 app.get('/',(req,res)=>{
     res.send('SERVER IS WORKING')
@@ -22,6 +23,8 @@ app.use('/api', homeRoute)
 app.use('/api', genreRoute)
 app.use('/api', cateRoute)
 app.use('/api', nameRoute)
+app.use('/api', newsRoute)
+app.use('/api', movieRoute)
         
 app.get('/search/:name', async(req,res)=>{
     const animeName = req.params.name

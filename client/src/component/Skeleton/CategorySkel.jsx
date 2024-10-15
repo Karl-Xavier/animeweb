@@ -71,13 +71,13 @@ const styles = {
     thumbnail:{
         width: '100%',
         height: '100%',
-        background: '#3b3b3b',
+        background: '#38384f',
         borderRadius: '5px'
     },
     title: {
         width: '60%',
         height: '20px',
-        background: '#3b3b3b',
+        background: '#38384f',
         borderRadius: '5px',
         marginTop: window.innerWidth < 768 && '10px',
         marginBottom: '20px'
@@ -86,13 +86,13 @@ const styles = {
         width: '85%',
         height: '10px',
         marginBottom: '10px',
-        background: '#3b3b3b',
+        background: '#38384f',
         borderRadius: '5px'
     },
     descriptionLast:{
         width: '55%',
         height: '10px',
-        background: '#3b3b3b',
+        background: '#38384f',
         borderRadius: '5px'
     },
     epCon:{
@@ -116,7 +116,7 @@ const styles = {
     ep:{
         width: window.innerWidth > 768 && '100px' || window.innerWidth < 768 && '95px' || window.innerWidth == 768 && '110px',
         height: '40px',
-        background: '#3b3b3b',
+        background: '#38384f',
         borderRadius: '5px'
     }
 }

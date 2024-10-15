@@ -9,11 +9,11 @@ export default function Content() {
         const screen = window.innerWidth
         const breakPoint = 768
         if(screen > breakPoint){
-            return styles.epCon
+            return styles.epiBtn
         }else if(screen < breakPoint){
-            return styles.epConSm
+            return styles.epiBtnSm
         }else{
-            return styles.epConMid
+            return styles.epiBtnMid
         }
     }
 
@@ -41,13 +41,20 @@ export default function Content() {
                 const trimmedName = name.startsWith('/') ? name.substring(1) : name;
                 const response = await axios.get(`http://localhost:5003/api/category/${trimmedName}`)
                 setAnimeInfo(response.data)
-                console.log(response.data)
             } catch (err){
                 console.log('Error', err)
             }
         }
         fetchResults()
     },[name])
+
+    useEffect(() => {
+        if (animeInfo) {
+          document.title = `${animeInfo.title} - Watch Now`
+        } else {
+            document.title = 'Watch, Stream and Download Anime Online'
+        }
+      }, [animeInfo])
 
     const beforeColon=(str)=>{
         return str.split(':')[0].trim()
@@ -128,7 +135,7 @@ export default function Content() {
             <h3 style={styles.episodeHeader}>Available Episodes</h3>
             <div style={styles.buttonDiv}>
                 {animeInfo.episodes && animeInfo.episodes.length > 0 && animeInfo.episodes.map((episode, index) => (
-                    <button style={styles.epiBtn} key={index} onClick={() => handleRedirect(episode.epLink)}>
+                    <button style={currentStyles} key={index} onClick={() => handleRedirect(episode.epLink)}>
                         {episode.epNum}
                     </button>
                 ))}
@@ -180,31 +187,33 @@ const styles = {
     },
     epiBtn: {
         background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
-        width: window.innerWidth > 768 && '100px' || window.innerWidth < 768 && '95px' || window.innerWidth == 768 && '110px',
+        width: '100px',
         height: '40px',
         padding: '5px',
-        margin: window.innerWidth < 768 ? '2px' : '5px',
+        margin: '5px',
         borderRadius: '5px',
         fontWeight: 'bold',
         fontSize: '1rem'
     },
-    epCon:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(8, 1fr)',
-        gap: '10px',
-        marginTop: '20px'
+    epiBtnMid:{
+        background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+        width: '110px',
+        height: '40px',
+        padding: '5px',
+        margin: '5px',
+        borderRadius: '5px',
+        fontWeight: 'bold',
+        fontSize: '1rem'
     },
-    epConMid:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(6, 1fr)',
-        gap: '10px',
-        marginTop: '20px'
-    },
-    epConSm:{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '10px',
-        marginTop: '20px'
+    epiBtnSm:{
+        background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+        width: '95px',
+        height: '40px',
+        padding: '5px',
+        margin: '2px',
+        borderRadius: '5px',
+        fontWeight: 'bold',
+        fontSize: '1rem'
     },
     episodeHeader: {
         fontSize: '1.4rem',

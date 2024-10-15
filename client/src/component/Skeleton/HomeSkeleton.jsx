@@ -30,8 +30,36 @@ export default function HomeSkeleton() {
     },[])
 
   return (
-    <div>
+    <div className='container grid place-content-center'>
         <div className="my-3 w-full" style={currentStyles}>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
+            <div className="w-36 h-52 lg:w-48 md:w-44">
+                <div className='blink' style={styles.thumbnail}></div>
+                <div className='blink' style={styles.title}></div>
+            </div>
             <div className="w-36 h-52 lg:w-48 md:w-44">
                 <div className='blink' style={styles.thumbnail}></div>
                 <div className='blink' style={styles.title}></div>
@@ -73,29 +101,32 @@ const styles = {
     thumbnail:{
         width: '100%',
         height: '75%',
-        background: '#3b3b3b',
+        background: '#38384f',
         borderRadius: '5px'
     },
     title:{
         width: '100%',
         height: '20px',
-        background: '#3b3b3b',
+        background: '#38384f',
         margin: '10px 0 0 0',
         borderRadius: '5px'
     },
     bigScreen:{
         display: 'grid',
         gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '12px'
+        gap: '12px',
+        placeContent: 'center'
     },
     midScreen:{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '12px'
+        gap: '12px',
+        placeContent: 'center'
     },
     smScreen:{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '8px'
+        gap: '8px',
+        placeContent: 'center'
     }
 }

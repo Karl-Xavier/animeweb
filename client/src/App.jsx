@@ -5,14 +5,13 @@ import './App.css'
 import Header from './component/Header/Header'
 import SideNav from './component/Nav/SideNav'
 import Home from './pages/Home/Home'
-import NewSeason from './pages/NewSeason/NewSeason'
-import Popular from './pages/Popular/Popular'
 import Movie from './pages/Movie/Movie'
 import GenreResult from './pages/GenreResult/GenreResult'
 import Category from './pages/Category/Category'
 import SearchPage from './pages/SearchPage/SearchPage'
 import CateCon from './pages/CateCon/CateCon'
-import CategorySkel from './component/Skeleton/CategorySkel'
+import News from './pages/News/News'
+import Err from './pages/404'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -31,14 +30,13 @@ function App() {
         <div>
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='/newseason' element={<NewSeason/>}/>
-            <Route path='/popular' element={<Popular/>}/>
             <Route path='/movies' element={<Movie/>}/>
             <Route path='/genre/:genre' element={<GenreResult/>}/>
             <Route path='/category/:name' element={<Category/>}/>
             <Route path='/searchpage' element={<SearchPage/>}/>
             <Route path='/:epLink' element={<CateCon/>}/>
-            <Route path='/homeskel' element={<CategorySkel/>}/>
+            <Route path='/feed' element={<News/>}/>
+            <Route path='/*' element={<Err/>}/>
           </Routes>
         </div>
       </div>

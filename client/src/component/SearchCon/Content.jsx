@@ -1,10 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { MagnifyingGlass } from 'phosphor-react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 export default function Content() {
+
+    function getStyles(){
+        const screen = window.innerWidth
+        const breakPoint = 768
+        if(screen > breakPoint){
+            return styles.bigScreen
+        }else if(screen < breakPoint){
+            return styles.smScreen
+        }else{
+            return styles.midScreen
+        }
+    }
+
+    const [currentStyles, setCurrentStyles] = useState(getStyles())
+
+    useEffect(()=>{
+        function handleResize(){
+            setCurrentStyles(getStyles())
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return ()=>{
+            window.removeEventListener('resize', handleResize)
+        }
+    },[])
 
     const [ searchQuery, setSearchQuery ] = useState('')
     const [ animeRes, setAnimeRes ] = useState([])
@@ -33,24 +59,30 @@ export default function Content() {
             <button style={styles.cta}><MagnifyingGlass weight='bold' size={24}/></button>
         </form>
         {searchQuery !== '' && (
-            <h3 className='my-3'>Your Results for {searchQuery}</h3>
+            <h3 className='my-3' style={{ fontWeight: '600', color: '#ee49fd' }}>Your Results for {searchQuery}</h3>
         )}
-        <div className='row'>
-            {animeRes.map((anime, index)=>{
-                return (
-                <div key={index} className="col-lg-3 col-md-4 col-6 text-center">
+        <div className='container grid place-content-center'>
+        <div className='my-3' style={currentStyles}>
+        {animeRes.map((anime, index)=>{
+             return (
+                <div key={index} className="w-44 h-64 lg:w-48 md:w-44 text-center">
                     <Link to={anime.link}>
-                    <img src={anime.imgURL} alt={anime.title} className='img-fluid' style={styles.img}/>
-                    <h3 style={styles.title}>{anime.title}</h3>
-                    <p style={styles.episode}>{anime.released}</p>
+                        <img src={anime.imgURL} alt={anime.title} className='img-fluid rounded' style={styles.img}/>
+                        <h3 style={styles.title}>{anime.title}</h3>
+                        <p style={styles.episode}>{anime.released}</p>
                     </Link>
-                </div>
+                 </div>
                 )
-            })}
+        })}
+        </div>
         </div>
     </div>
   )
 }
+
+/* {animeRes.map((anime, index)=>{
+   
+})} */
 
 const styles = {
     form: {
@@ -77,7 +109,7 @@ const styles = {
     },
     img: {
         width: '100%',
-        height: '280px',
+        height: '75%',
         objectFit: 'cover'
     },
     episode: {
@@ -91,5 +123,23 @@ const styles = {
         overflow: 'hidden',
         color: '#6167ff',
         fontWeight: '600'
+    },
+    bigScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '12px',
+        margin: '8px 0 8px 0'
+    },
+    midScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '12px',
+        margin: '8px 0 8px 0'
+    },
+    smScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '8px',
+        margin: '8px 0 8px 0'
     }
 }

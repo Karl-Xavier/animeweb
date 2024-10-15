@@ -5,6 +5,33 @@ import Err from '../Err'
 import HomeSkeleton from '../Skeleton/HomeSkeleton'
 
 export default function Content() {
+
+    function getStyles(){
+        const screen = window.innerWidth
+        const breakPoint = 768
+        if(screen > breakPoint){
+            return styles.bigScreen
+        }else if(screen < breakPoint){
+            return styles.smScreen
+        }else{
+            return styles.midScreen
+        }
+    }
+
+    const [currentStyles, setCurrentStyles] = useState(getStyles())
+
+    useEffect(()=>{
+        function handleResize(){
+            setCurrentStyles(getStyles())
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return ()=>{
+            window.removeEventListener('resize', handleResize)
+        }
+    },[])
+
     const { genre } = useParams()
     const [ results, setResult ] = useState([])
     const [ loading, setLoading ] = useState(true)
@@ -18,12 +45,20 @@ export default function Content() {
             setLoading(false)
             setErr(null)
         } catch (error) {
-            console.log('Error', error)
             setLoading(false)
+            setErr('Something went wrong')
         }
        }
        fetchData()
     },[genre])
+
+    useEffect(() => {
+        if(genre){
+            document.title = `${genre.toUpperCase()} ANIME`
+        }else {
+            document.title = 'Watch, Stream and Download Anime Online'
+        }
+    }, [genre])
 
     if(loading){
         return(
@@ -37,12 +72,12 @@ export default function Content() {
     }
 
   return (
-    <div>
-        <h3>{!err ? 'Results for '+genre : 'No Results Here'}</h3>
-        <div className="row my-3">
+    <div className='container grid place-content-center'>
+        <h3 style={{ fontWeight: '600'}}>Results for <span style={{ fontWeight: '600', color: '#ee49fd' }}>{genre}</span></h3>
+        <div className="my-3" style={currentStyles}>
         {results.map((result, index) => {
             return (
-                <div key={index} className="col-lg-3 col-md-4 col-6 mb-3 text-center">
+                <div key={index} className="w-44 h-64 lg:w-48 md:w-44 text-center">
                     <Link to={result.link}>
                         <img style={styles.img} src={result.imgURL} alt="" className="img-fluid rounded-xl" />
                         <p style={styles.title}>{result.title}</p>
@@ -59,7 +94,7 @@ export default function Content() {
 const styles = {
     img: {
         width: '100%',
-        height: '280px',
+        height: '75%',
         objectFit: 'cover'
     },
     released: {
@@ -76,5 +111,20 @@ const styles = {
     },
     link: {
         textDecoration: 'none'
+    },
+    bigScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '12px',
+    },
+    midScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '12px',
+    },
+    smScreen:{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '8px',
     }
 }

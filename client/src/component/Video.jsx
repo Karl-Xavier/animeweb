@@ -1,39 +1,63 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react';
 
 export default function Video({ video }) {
+  const iframeRef = useRef(null);
+  const [iframeSize, setIframeSize] = useState({ width: 800, height: 450 });
 
-    console.log(video)
+  // Adjust iframe size based on the window width
+  useEffect(() => {
+    function updateIframeSize() {
+      const windowWidth = window.innerWidth;
 
-    const iframeRef = useRef(null)
+      let width, height;
+      if (windowWidth < 768) {
+        width = windowWidth - 40
+        height = 300
+      } else if (windowWidth < 1200) {
+        width = 700
+        height = 450
+      } else {
+        width = 980
+        height = 570
+      }
+
+      setIframeSize({ width, height });
+    }
+
+    updateIframeSize(); // Set initial size
+    window.addEventListener('resize', updateIframeSize); // Adjust on resize
+
+    return () => window.removeEventListener('resize', updateIframeSize);
+  }, []);
 
   return (
-    <div className='relative w-full h-64'>
-        <div style={styles.outer}>
-            <iframe 
-                ref={iframeRef} 
-                src={video}
-                allow="autoplay; fullscreen" 
-                title="Video"
-                style={styles.iframe}
-                frameborder="0" marginwidth="0" marginheight="0" scrolling='no'
-            ></iframe>
-        </div>
+    <div style={styles.container}>
+      <iframe
+        ref={iframeRef}
+        src={video}
+        allow="autoplay; fullscreen"
+        title="Video"
+        width={iframeSize.width}
+        height={iframeSize.height}
+        frameBorder="0"
+        marginWidth="0"
+        marginHeight="0"
+        scrolling="no"
+        style={styles.iframe}
+      ></iframe>
     </div>
-  )
+  );
 }
 
 const styles = {
-  outer:{
-    padding: 0,
-    minHeight: '260px',
-    minWidth: '100%',
-    background: '#242424'
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: '20px',
   },
   iframe: {
-    width: '100%',
-  /* height: window.innerWidth < 768 && '280' || window.innerWidth > 768 && '600' || window.innerWidth == 768 && '300' */height: '100%',
-  border: 'none',
-  display: 'block',
-  position: 'absolute'
-  }
-}
+    borderRadius: '8px',
+  },
+};

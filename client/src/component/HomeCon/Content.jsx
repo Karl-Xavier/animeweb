@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
-import { XCircle } from 'phosphor-react'
-import Loader from '../Loader'
 import Err from '../Err'
 import HomeSkeleton from '../Skeleton/HomeSkeleton'
 
@@ -38,10 +36,6 @@ export default function Content() {
     const [ err, setErr ] = useState(null)
     const [ loading, setLoading ] = useState(true)
 
-    const netErr = axios.AxiosError.ERR_NETWORK
-    const wrong = axios.AxiosError.ERR_BAD_REQUEST
-    const invalid = axios.AxiosError.ERR_INVALID_URL
-
     useEffect(()=>{
         async function fetchNewData(){
             try{
@@ -50,20 +44,16 @@ export default function Content() {
                 setLoading(false)
                 setErr(null)
             }catch(err){
-                console.log('Error Occurred', err)
                 setLoading(false)
-                if(netErr){
-                    setErr('No Stable Internet')
-                    return
-                } else if (wrong){
-                    setErr('Something Went Wrong')
-                } else if(invalid){
-                    setErr('No Such genre')
-                }
+                setErr('Something Went Wrong')
             }
         }
         fetchNewData()
     },[])
+
+    useEffect(() => {
+          document.title = 'Watch, Stream and Download Anime Online'
+    }, [])
 
     if(loading){
         return(
@@ -76,16 +66,13 @@ export default function Content() {
         )
     }
 
-    console.log('hello')
-
   return (
-    <div className='container'>
-        <h3><strong>RECENT RELEASE</strong></h3>
-        {/* <iframe src="https://s3taku.com/streaming.php?id=MjE5MDUx&title=Kingdom+5th+Season+%28Chinese+Name%29+Episode+1&typesub=SUB" width="800" height="450" allow="autoplay; fullscreen" allowfullscreen></iframe> */}
+    <div className='container grid place-content-center'>
+        <h3 style={{ fontWeight: '600', color: '#ee49fd' }}><strong>RECENT RELEASE</strong></h3>
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
-                 <div key={index} className="w-36 h-64 lg:w-48 md:w-44 text-center">
+                 <div key={index} className="w-44 h-64 lg:w-48 md:w-44 text-center">
                    <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid rounded-xl" />
                    <p style={styles.title}>{episode.title}</p>
                    <span style={styles.episode}>{episode.episodeNum}</span>
@@ -93,9 +80,6 @@ export default function Content() {
                 )
             })}
         </div>
-        {recentEpisode.length === 0 && (
-            <p>No Recent Release</p>
-        )}
     </div>
   )
 }
@@ -122,16 +106,16 @@ const styles = {
     bigScreen:{
         display: 'grid',
         gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '12px'
+        gap: '12px',
     },
     midScreen:{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '12px'
+        gap: '12px',
     },
     smScreen:{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '8px'
+        gap: '8px',
     }
 }
