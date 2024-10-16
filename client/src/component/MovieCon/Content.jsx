@@ -68,7 +68,7 @@ if(err){
 
   return (
     <div className='container grid place-content-center'>
-      <h3 style={{ fontWeight: '600', color: '#ee49fd' }}><strong>MOVIES</strong></h3>
+      <h3 style={{ fontWeight: '600', color: '#6167ff' }}><strong>MOVIES</strong></h3>
         <div className="my-3" style={currentStyles}>
             {movies.map((movie, index) => {
                 return (

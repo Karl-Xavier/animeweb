@@ -69,7 +69,7 @@ export default function Content() {
 
   return (
     <div className='container grid place-content-center'>
-        <h3 style={{ fontWeight: '600', color: '#ee49fd' }}><strong>RECENT RELEASE</strong></h3>
+        <h3 style={{ fontWeight: '600', color: '#6167ff' }}><strong>RECENT RELEASE</strong></h3>
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
