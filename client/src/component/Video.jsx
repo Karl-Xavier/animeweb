@@ -4,7 +4,6 @@ export default function Video({ video }) {
   const iframeRef = useRef(null);
   const [iframeSize, setIframeSize] = useState({ width: 800, height: 450 });
 
-  // Adjust iframe size based on the window width
   useEffect(() => {
     function updateIframeSize() {
       const windowWidth = window.innerWidth;
@@ -28,7 +27,7 @@ export default function Video({ video }) {
     window.addEventListener('resize', updateIframeSize); // Adjust on resize
 
     return () => window.removeEventListener('resize', updateIframeSize);
-  }, []);
+  }, [])
 
   return (
     <div style={styles.container}>

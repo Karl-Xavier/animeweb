@@ -6,6 +6,34 @@ import Video from '../Video'
 import VideoSkeleton from '../Skeleton/VideoSkeleton'
 
 export default function Content() {
+
+    const [iframeDivSize, setIframeDivSize] = useState({ width: 800, height: 450 });
+
+    useEffect(() => {
+      function updateIframeSize() {
+        const windowWidth = window.innerWidth;
+  
+        let width, height;
+        if (windowWidth < 768) {
+          width = windowWidth - 40
+          height = 300
+        } else if (windowWidth < 1200) {
+          width = 700
+          height = 450
+        } else {
+          width = 980
+          height = 570
+        }
+  
+        setIframeDivSize({ width, height });
+      }
+  
+      updateIframeSize(); // Set initial size
+      window.addEventListener('resize', updateIframeSize); // Adjust on resize
+  
+      return () => window.removeEventListener('resize', updateIframeSize);
+    }, [])
+  
     const { epLink } = useParams()
     const [animeDetails, setAnimeDetails] = useState(null)
 
@@ -47,7 +75,9 @@ useEffect(() => {
             {animeDetails ? (
                 <div className='grid place-content-center w-full'>
                     <h2 style={styles.h2}>{animeDetails.title}</h2>
-                    <Video video={animeDetails.videoSRC}/>
+                    <div style={{ height: iframeDivSize.height, width: iframeDivSize.width, background: '#000' }} className='p-0 m-0'>
+                        <Video video={animeDetails.videoSRC}/>
+                    </div>
                     <div className='prev-next flex flex-row justify-between items-center p-3' style={styles.prevNext}>
                         {animeDetails.prev && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.prev}>Back</Link>}
                         {animeDetails.next && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.next}>Next</Link>}
