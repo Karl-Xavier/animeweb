@@ -53,7 +53,7 @@ useEffect(() => {
         try {
             const { animeName, episodeNumber } = parseEpisodeLink(epLink)
             
-            const response = await axios.get(`https://animeweb-orcin.vercel.app/api/${animeName}/${episodeNumber}`)           
+            const response = await axios.get(`https://animeweb-orcin.vercel.app/api/${animeName}/${episodeNumber}`)
             setAnimeDetails(response.data)
         } catch (err) {
             console.error('Error fetching anime details:', err)

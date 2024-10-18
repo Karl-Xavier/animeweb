@@ -6,7 +6,7 @@ const webURL = require('../url')
 async function fetchAllMovies(maxPages){
     const allMovies = []
     for(let page = 1; page <= maxPages; page++){
-        const url = `${webURL}/anime-movies.html?page=${maxPages}`
+        const url = `${webURL}/anime-movies.html?page=${page}`
         const $ = await FetchHTML(url)
 
         $('.last_episodes ul.items li').each((index, element)=>{

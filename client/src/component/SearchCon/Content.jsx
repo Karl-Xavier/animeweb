@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { MagnifyingGlass } from 'phosphor-react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import HomeSkeleton from '../Skeleton/HomeSkeleton'
+import Err from '../Err'
+import Suggestions from '../suggestions'
 
 export default function Content() {
 
@@ -34,12 +37,13 @@ export default function Content() {
 
     const [ searchQuery, setSearchQuery ] = useState('')
     const [ animeRes, setAnimeRes ] = useState([])
-    const [ loading, setLoading ] = useState(true)
+    const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState(null)
 
     async function handleSearch(e){
         e.preventDefault()
         try{
+            setLoading(true)
             const response = await axios.get(`https://animeweb-orcin.vercel.app/search/${searchQuery}`)
             setLoading(false)
             setAnimeRes(response.data)
@@ -49,7 +53,6 @@ export default function Content() {
             setErr('Something went wrong')
         }
     }
-    
 
   return (
     <div className='container'>
@@ -57,7 +60,8 @@ export default function Content() {
             <input style={styles.input} type="text" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} placeholder='Anime Name... e.g Naruto'/>
             <button style={styles.cta}><MagnifyingGlass weight='bold' size={24}/></button>
         </form>
-        {searchQuery !== '' && (
+        <Suggestions query={searchQuery}/>
+        {animeRes.length > 0 && (
             <h3 className='my-3' style={{ fontWeight: '600', color: '#ee49fd' }}>Your Results for {searchQuery}</h3>
         )}
         <div className='container grid place-content-center'>
@@ -75,6 +79,12 @@ export default function Content() {
         })}
         </div>
         </div>
+        {loading && (
+            <HomeSkeleton/>
+        )}
+        {err && (
+            <Err err={err}/>
+        )}
     </div>
   )
 }
