@@ -87,7 +87,7 @@ if(err){
 
   return (
     <div className='container grid place-content-center'>
-      <h2 style={{ fontWeight: '600', color: '#ee49fd', margin: '0 0 15px 0' }}>TODAY'S ANIME NEWS</h2>
+      <h2 style={{ fontWeight: '600', color: '#eee', margin: '0 0 15px 0', fontSize: '1.3rem' }}>TODAY'S ANIME NEWS</h2>
       <div style={width}>
           {news.map((feed, index)=>{
             return (
@@ -139,7 +139,7 @@ button:{
   justifyContent: 'space-around',
   alignIyems: 'center',
   fontWeight: '600',
-  background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+  background: '#643c7d',
   padding: '5px',
   borderRadius: '5px'
 }

@@ -28,8 +28,8 @@ export default function SmallNav() {
       top: 0,
       left: 0,
       height: '100dvh',
-      width: !isExpanded ? '70%' : '100%',
-      background: '#2a2a3d',
+      width: !isExpanded ? '100%' : '100%',
+      background: '#242424',
       overflowX: 'hidden',/* 
       transform: 'translateX(-260px)', */
       transition: 'width 0.3s ease', 
@@ -74,10 +74,7 @@ export default function SmallNav() {
        <button style={styles.btn} onClick={toggleNavVisibility}>{!isNavOpen ? <List size={24} weight='bold'/> : <X size={24} weight='bold'/>}</button>
        {isNavOpen && (
         <div className='container' style={isNavOpen ? styles.sidebaropen : styles.sidebarclosed}>
-          {isExpanded && <button style={styles.expandbtn} onClick={()=> {
-            setIsNavOpen(false)
-            setIsExpanded(false)
-          }}><X size={24} weight='bold'/></button>}
+          <button style={styles.expandbtn} onClick={()=> setIsNavOpen(false)}><X size={24} weight='bold'/></button>
           <SearchBar handleExpand={handleExpand} setIsExpanded={setIsExpanded} setIsNavOpen={setIsNavOpen}/>
           <ul style={styles.ul}>
               <li onClick={()=>{

@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const axios = require('axios')
-const cheerio = require('cheerio')
 
 router.get('/:animeName/:episodeNumber', async (req, res) => {
     try {
@@ -14,22 +13,11 @@ router.get('/:animeName/:episodeNumber', async (req, res) => {
         const response = await axios.get(apiUrl)
         const episodeData = response.data
 
-        const videoSRC = episodeData.iframe || 'Video source not available'
+        const videoSRC = episodeData.iframe || undefined
         let downloadLink = ''
 
         if (videoSRC.includes('streaming.php')) {
-            console.log('includes')
             downloadLink = videoSRC.replace('streaming.php', 'download')
-            console.log(downloadLink)
-        }
-
-        let resolution = ''
-        if (downloadLink) {
-            const pageResponse = await axios.get(downloadLink)
-            const $ = cheerio.load(pageResponse.data)
-            resolution = $('div#content-download > div:nth-child(1) > div.dowload > a').attr('href')
-            console.log(resolution)
-            console.log(pageResponse.status)
         }
         
         const formatSlug = (slug) => (slug ? `/${slug}` : null)
@@ -41,8 +29,6 @@ router.get('/:animeName/:episodeNumber', async (req, res) => {
             next: formatSlug(episodeData.next?.full_slug),
             prev: formatSlug(episodeData.prev?.full_slug)
         }
-
-        console.log(VideoDetails)
         res.json(VideoDetails)
 
     } catch (error) {

@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 .mainCol{
-  background: #1c1c28;
+  /* background: #1c1c28;
+  color: #e0e0e0; */
+  background: #121212;
   color: #e0e0e0;
 }
 

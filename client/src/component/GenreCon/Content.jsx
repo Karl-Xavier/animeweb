@@ -73,13 +73,13 @@ export default function Content() {
 
   return (
     <div className='container grid place-content-center'>
-        <h3 style={{ fontWeight: '600'}}>Results for <span style={{ fontWeight: '600', color: '#ee49fd' }}>{genre}</span></h3>
+        <h3 style={{ fontWeight: '600'}}>Results for <span style={{ fontWeight: '600', color: '#643c7d' }}>{genre}</span></h3>
         <div className="my-3" style={currentStyles}>
         {results.map((result, index) => {
             return (
-                <div key={index} className="w-40 h-64 lg:w-48 md:w-44 text-center">
+                <div key={index} className="w-40 h-72 lg:w-48 md:w-44 text-center">
                     <Link to={result.link}>
-                        <img style={styles.img} src={result.imgURL} alt="" className="img-fluid rounded-xl" />
+                        <img style={styles.img} src={result.imgURL} alt="" className="img-fluid" />
                         <p style={styles.title}>{result.title}</p>
                         <span style={styles.released}>{result.released}</span>
                     </Link>
@@ -103,11 +103,9 @@ const styles = {
     },
     title: {
         maxWidth: '100%',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
         color: ' #6167ff',
-        fontWeight: '600'
+        fontWeight: '600',
+        lineHeight: '1.1'
     },
     link: {
         textDecoration: 'none'

@@ -1,11 +1,66 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import fof from '../assets/404.jpg' 
 import { Link } from 'react-router-dom'
 import Loader from './Loader'
 import Err from './Err'
 
-export default function Suggestions({ query }) {
+export default function Suggestions({ query, animeRes, animeload }) {
+
+    const [ suggestions, setSuggestions ] = useState([])
+    const [ loading, setLoading ] = useState(false)
+    const [ err, setErr ] = useState(null)
+
+    const styles = {
+        small:{
+            width: '100%',
+            border: '1px solid whitesmoke',
+            borderTop: suggestions.length === 0 && 'none',
+            borderBottom: 'none',
+            borderRadius: '5px',
+            background: '#242424',
+            maxHeight: '400px',
+            overflowY: 'scroll'
+        },
+        large:{
+            width: '70%',
+            border: '1px solid whitesmoke',
+            borderTop: suggestions.length === 0 && 'none',
+            borderRadius: '5px',
+            borderBottom: 'none',
+            background: '#242424',
+            maxHeight: '500px',
+            overflowY: 'scroll'
+        },
+        ul:{
+            width: '100%'
+        },
+        li:{
+            display: 'flex',
+            flexDirection: 'row-reverse',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderBottom: '1px solid whitesmoke',
+            margin: '0 0 5px 0',
+            padding: '5px'
+        },
+        liImg:{
+            width: '50px',
+            height: '50px'
+        },
+        span:{
+            maxWidth: '75%',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden'
+        },
+        loaderli:{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '5px 0 5px 0'
+        },
+    }
 
     function getStyles(){
         const screen = window.innerWidth
@@ -25,10 +80,6 @@ export default function Suggestions({ query }) {
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
     },[])
-
-    const [ suggestions, setSuggestions ] = useState([])
-    const [ loading, setLoading ] = useState(false)
-    const [ err, setErr ] = useState(null)
 
     async function fetchSuggestions(input){
         if(input.length < 1) return
@@ -57,73 +108,26 @@ export default function Suggestions({ query }) {
 
   return (
     <div className='w-full'>
-        <div style={suggestions.length === 0 ? {} : currentWidth}>
+        <div style={currentWidth}>
             <ul style={styles.ul}>
-            {suggestions.map((anisuge, index)=>{
-                    return <Link to={anisuge.link} key={index}>
-                        <li style={styles.li}>
-                        <img src={anisuge.imgURL} alt="" style={styles.liImg}/>
-                        <span>{anisuge.title}</span>
-                        </li>
-                    </Link>
-            })}
+            {animeRes.length === 0 && !animeload && (
+            suggestions.map((anisuge, index)=>{
+                return (
+                <Link to={anisuge.link} key={index}>
+                    <li style={styles.li}>
+                    <img src={anisuge.imgURL} alt="" style={styles.liImg}/>
+                    <span>{anisuge.title}</span>
+                    </li>
+                </Link>
+                )
+            }))}
             {loading && (
                 <li style={styles.loaderli}>
-                    <Loader /> {/* Display loader here */}
+                    <Loader/>
                 </li>
             )}
-            {suggestions.length === 0 && <Err message={err} />}
-        </ul>
+            </ul>
         </div>
     </div>
   )
-}
-
-const styles = {
-    small:{
-        width: '100%',
-        border: '1px solid whitesmoke',
-        borderBottom: 'none',
-        borderRadius: '5px',
-        background: '#2a2a3d',
-        maxHeight: '400px',
-        overflowY: 'scroll'
-    },
-    large:{
-        width: '70%',
-        border: '1px solid whitesmoke',
-        borderRadius: '5px',
-        borderBottom: 'none',
-        background: '#2a2a3d',
-        maxHeight: '500px',
-        overflowY: 'scroll'
-    },
-    ul:{
-        width: '100%'
-    },
-    li:{
-        display: 'flex',
-        flexDirection: 'row-reverse',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottom: '1px solid whitesmoke',
-        margin: '0 0 5px 0',
-        padding: '5px'
-    },
-    liImg:{
-        width: '50px',
-        height: '50px'
-    },
-    span:{
-        maxWidth: '75%',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden'
-    },
-    loaderli:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
 }

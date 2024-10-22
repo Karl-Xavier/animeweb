@@ -68,13 +68,13 @@ if(err){
 
   return (
     <div className='container grid place-content-center'>
-      <h3 style={{ fontWeight: '600', color: '#6167ff' }}><strong>MOVIES</strong></h3>
+      <h3 style={{ fontWeight: '600', color: '#643c7d' }}><strong>MOVIES</strong></h3>
         <div className="my-3" style={currentStyles}>
             {movies.map((movie, index) => {
                 return (
-                 <div key={index} className="w-40 h-64 lg:w-48 md:w-44 text-center">
+                 <div key={index} className="w-40 h-72 lg:w-48 md:w-44 text-center">
                    <Link to={movie.link}>
-                   <img style={styles.img} src={movie.imgURL} alt="" className="img-fluid rounded-xl" />
+                   <img style={styles.img} src={movie.imgURL} alt="" className="img-fluid" />
                    <p style={styles.title}>{movie.title}</p>
                    <span style={styles.episode}>{movie.released}</span>
                    </Link>
@@ -99,11 +99,9 @@ const styles = {
   },
   title: {
       maxWidth: '100%',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
       color: '#6167ff',
-      fontWeight: '600'
+      fontWeight: '600',
+      lineHeight: '1.1'
   },
   bigScreen:{
       display: 'grid',

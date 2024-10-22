@@ -11,8 +11,8 @@ import Category from './pages/Category/Category'
 import SearchPage from './pages/SearchPage/SearchPage'
 import CateCon from './pages/CateCon/CateCon'
 import News from './pages/News/News'
-import Err from './pages/404'
-import Adsense from './component/Adsense'
+import Footer from './component/Footer/Footer'
+import ErrorPage from './pages/ErrorPage/404'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -26,10 +26,9 @@ function App() {
       <div className="hidden md:hidden lg:block">
         <SideNav  isNavOpen={isNavOpen} toggleSlider={toggleNavVisibility} setIsNavOpen={setIsNavOpen}/>
       </div>
-      <div style={isNavOpen ? styles.mainContentOpen : styles.mainContentClosed} className='container'>
+      <div style={isNavOpen ? styles.mainContentClosed: styles.mainContentOpen} className='container'>
         <Header/>
-        {/* <Adsense/> */}
-        <div>
+        <div className='min-h-full'>
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/movies' element={<Movie/>}/>
@@ -38,9 +37,10 @@ function App() {
             <Route path='/searchpage' element={<SearchPage/>}/>
             <Route path='/:epLink' element={<CateCon/>}/>
             <Route path='/feed' element={<News/>}/>
-            <Route path='/*' element={<Err/>}/>
+            <Route path='/*' element={<ErrorPage/>}/>
           </Routes>
         </div>
+        <Footer/>
       </div>
     </div>
   )

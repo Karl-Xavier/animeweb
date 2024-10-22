@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import notfound from '../assets/404.jpg'
+import notfod from '../../assets/404.jpg'
 
-export default function Err() {
+export default function ErrorPage() {
 
     useEffect(()=>{
         document.title = 'Page Not Found'
@@ -9,7 +9,7 @@ export default function Err() {
 
   return (
     <div className='container flex flex-col items-center justify-center' style={{ height: '300px' }}>
-        <img src={notfound} alt="Not Found" style={styles.img}/>
+        <img src={notfod} alt="Not Found" style={styles.img}/>
         <h3 style={styles.h3}>The Page you are looking for does not exists</h3>
     </div>
   )

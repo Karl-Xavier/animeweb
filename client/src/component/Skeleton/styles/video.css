@@ -11,7 +11,7 @@
   
   /* Skeleton loading effect */
   .skeleton-video, .skeleton-epbutton, .skeleton-download {
-    background: linear-gradient(90deg, #38384f, #4a4a60, #38384f);
+    background: linear-gradient(90deg, #2a2a2a, #202020, #2a2a2a);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     border-radius: 8px;

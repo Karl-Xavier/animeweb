@@ -14,15 +14,13 @@ export default function Header() {
   return (
     <div className='container mb-3'>
         <header style={styles.header}>
+            <SmallNav/>
             <Link to={'/'}>
             <h1 style={styles.header.h1}>MyAnime_TV</h1>
             </Link>
-            <div className='flex flex-row items-center gap-9'>
-            {!searchPage && <Link to={'/searchpage'}>
+            <Link to={'/searchpage'}>
                 <MagnifyingGlass weight='bold' size={22}/>
-            </Link>}
-            <SmallNav/>
-            </div>
+            </Link>
         </header>
     </div>
   )

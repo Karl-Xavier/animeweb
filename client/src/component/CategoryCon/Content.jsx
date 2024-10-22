@@ -92,7 +92,7 @@ export default function Content() {
                 <p style={styles.namePa}>
                     <span style={styles.first}>
                         {styleText(beforeColon(animeInfo.names[2]))} 
-                    </span> 
+                    </span> &nbsp;
                     <span style={styles.second}>
                         {afterColon(animeInfo.names[2])}
                     </span>
@@ -100,7 +100,7 @@ export default function Content() {
                 <p style={styles.namePa}>
                     <span style={styles.first}>
                         {styleText(beforeColon(animeInfo.names[3]))} 
-                    </span> 
+                    </span> &nbsp;
                     <span style={styles.second}>
                         {afterColon(animeInfo.names[3])}
                     </span>
@@ -108,7 +108,7 @@ export default function Content() {
                 <p style={styles.namePa}>
                     <span style={styles.first}>
                         {styleText(beforeColon(animeInfo.names[0]))} 
-                    </span> 
+                    </span> &nbsp;
                     <span style={styles.second}>
                         {afterColon(animeInfo.names[0])}
                     </span>
@@ -116,7 +116,7 @@ export default function Content() {
                 <p style={styles.namePa}>
                     <span style={styles.first}>
                         {styleText(beforeColon(animeInfo.names[4]))} 
-                    </span> 
+                    </span> &nbsp;
                     <span style={styles.second}>
                         {afterColon(animeInfo.names[4])}
                     </span>
@@ -124,7 +124,7 @@ export default function Content() {
                 <p style={styles.namePa}>
                     <span style={styles.first}>
                         {styleText(beforeColon(animeInfo.names[5]))} 
-                    </span> 
+                    </span> &nbsp;
                     <span style={styles.second}>
                         {afterColon(animeInfo.names[5])}
                     </span>
@@ -186,7 +186,7 @@ const styles = {
         fontWeight: '600'
     },
     epiBtn: {
-        background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+        background: '#643c7d',
         width: '100px',
         height: '40px',
         padding: '5px',
@@ -196,7 +196,7 @@ const styles = {
         fontSize: '1rem'
     },
     epiBtnMid:{
-        background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+        background: '#643c7d',
         width: '110px',
         height: '40px',
         padding: '5px',
@@ -206,7 +206,7 @@ const styles = {
         fontSize: '1rem'
     },
     epiBtnSm:{
-        background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+        background: '#643c7d',
         width: '95px',
         height: '40px',
         padding: '5px',

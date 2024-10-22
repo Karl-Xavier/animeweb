@@ -36,6 +36,7 @@ export default function Content() {
   
     const { epLink } = useParams()
     const [animeDetails, setAnimeDetails] = useState(null)
+    //const [ videosrc, setVideosrc ] = useState('')
 
     function parseEpisodeLink(link) {
         if (typeof link !== 'string') {
@@ -114,7 +115,7 @@ const styles = {
         alignItems: 'center',
         gap: '10px',
         color: '#eee',
-        background: 'linear-gradient(270deg, #ee49fd, #6167ff)',
+        background: '#643c7d',
         margin: '14px 0 0 10px'
     }
 }

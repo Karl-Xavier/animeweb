@@ -60,17 +60,17 @@ export default function Content() {
             <input style={styles.input} type="text" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} placeholder='Anime Name... e.g Naruto'/>
             <button style={styles.cta}><MagnifyingGlass weight='bold' size={24}/></button>
         </form>
-        <Suggestions query={searchQuery}/>
+        <Suggestions query={searchQuery} animeRes={animeRes} animeload={loading}/>
         {animeRes.length > 0 && (
-            <h3 className='my-3' style={{ fontWeight: '600', color: '#ee49fd' }}>Your Results for {searchQuery}</h3>
+            <h3 className='my-3' style={{ fontWeight: '600', color: '#643c7d' }}>Your Results for {searchQuery}</h3>
         )}
         <div className='container grid place-content-center'>
         <div className='my-3' style={currentStyles}>
         {animeRes.map((anime, index)=>{
              return (
-                <div key={index} className="w-40 h-64 lg:w-48 md:w-44 text-center">
+                <div key={index} className="w-40 h-72 lg:w-48 md:w-44 text-center">
                     <Link to={anime.link}>
-                        <img src={anime.imgURL} alt={anime.title} className='img-fluid rounded' style={styles.img}/>
+                        <img src={anime.imgURL} alt={anime.title} className='img-fluid' style={styles.img}/>
                         <h3 style={styles.title}>{anime.title}</h3>
                         <p style={styles.episode}>{anime.released}</p>
                     </Link>
@@ -88,10 +88,6 @@ export default function Content() {
     </div>
   )
 }
-
-/* {animeRes.map((anime, index)=>{
-   
-})} */
 
 const styles = {
     form: {
@@ -127,11 +123,9 @@ const styles = {
     },
     title: {
         maxWidth: '100%',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
         color: '#6167ff',
-        fontWeight: '600'
+        fontWeight: '600',
+        lineHeight: '1.1'
     },
     bigScreen:{
         display: 'grid',

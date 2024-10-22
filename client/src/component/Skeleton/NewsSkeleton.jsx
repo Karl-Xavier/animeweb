@@ -22,13 +22,13 @@ function NewsSkeleton() {
             width: '100%',
             height: '75%',
             borderRadius: '5px',
-            background: '#38384f'
+            background: '#2a2a2a'
         },
         title: {
             width: '100%',
             height: '20px',
             borderRadius: '5px',
-            background: '#38384f',
+            background: '#2a2a2a',
             marginTop: '20px'
         }
     }

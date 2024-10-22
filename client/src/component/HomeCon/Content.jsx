@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
 import Err from '../Err'
 import HomeSkeleton from '../Skeleton/HomeSkeleton'
+import Slider from './Slider'
 import { Link } from 'react-router-dom'
 
 export default function Content() {
@@ -34,6 +35,7 @@ export default function Content() {
     },[])
 
     const [recentEpisode, setRecentEpisode] = useState([])
+    const [ lastThree, setLastThree ] = useState([])
     const [ err, setErr ] = useState(null)
     const [ loading, setLoading ] = useState(true)
 
@@ -42,6 +44,7 @@ export default function Content() {
             try{
                 const response = await axios.get('https://animeweb-orcin.vercel.app/api/recent')
                 setRecentEpisode(response.data)
+                setLastThree(response.data.slice(-3))
                 setLoading(false)
                 setErr(null)
             }catch(err){
@@ -69,13 +72,14 @@ export default function Content() {
 
   return (
     <div className='container grid place-content-center'>
-        <h3 style={{ fontWeight: '600', color: '#6167ff' }}><strong>RECENT RELEASE</strong></h3>
+        <Slider anislide={lastThree}/>
+        <h2 style={{ fontWeight: '600', color: '#643c7d', fontSize: '1.3rem' }}><strong>RECENT RELEASE</strong></h2>
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
                  <Link to={episode.link} key={index}>
-                    <div className="w-40 h-64 lg:w-48 md:w-44 text-center">
-                   <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid rounded-xl" />
+                    <div className="w-40 h-72 lg:w-48 md:w-44 text-center">
+                   <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid" />
                    <p style={styles.title}>{episode.title}</p>
                    <span style={styles.episode}>{episode.episodeNum}</span>
                  </div>
@@ -91,8 +95,8 @@ const styles = {
     img:{
         width: '100%',
         height: '75%',
-        borderRadius: '5px',
-        objectFit: 'cover'
+        objectFit: 'cover',
+        margin: '0 0 2px 0'
     },
     episode: {
         textAlign: 'center',
@@ -100,11 +104,9 @@ const styles = {
     },
     title: {
         maxWidth: '100%',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
         color: '#6167ff',
-        fontWeight: '600'
+        fontWeight: '600',
+        lineHeight: '1.1'
     },
     bigScreen:{
         display: 'grid',

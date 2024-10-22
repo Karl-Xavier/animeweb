@@ -101,13 +101,13 @@ const styles = {
     thumbnail:{
         width: '100%',
         height: '75%',
-        background: '#38384f',
+        background: '#2a2a2a',
         borderRadius: '5px'
     },
     title:{
         width: '100%',
         height: '20px',
-        background: '#38384f',
+        background: '#2a2a2a',
         margin: '10px 0 0 0',
         borderRadius: '5px'
     },
