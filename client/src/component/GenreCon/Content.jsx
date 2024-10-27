@@ -37,10 +37,12 @@ export default function Content() {
     const [ loading, setLoading ] = useState(true)
     const [err, setErr] = useState(null)
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
     useEffect(()=>{
        async function fetchData(){
         try {
-            const response = await axios.get(`https://animeweb-orcin.vercel.app/api/genre/${genre}`)
+            const response = await axios.get(`${backendUrl}api/genre/${genre}`)
             setResult(response.data)
             setLoading(false)
             setErr(null)
@@ -95,7 +97,8 @@ const styles = {
     img: {
         width: '100%',
         height: '75%',
-        objectFit: 'cover'
+        objectFit: 'cover',
+        margin: '0 0 2px 0'
     },
     released: {
         textAlign: 'center',
@@ -103,9 +106,13 @@ const styles = {
     },
     title: {
         maxWidth: '100%',
-        color: ' #6167ff',
+        color: '#6167ff',
         fontWeight: '600',
-        lineHeight: '1.1'
+        lineHeight: '16px',
+        height: '34px',
+        overflow: 'hidden',
+        margin: '5px 0 0 0',
+        fontFamily: 'Oswald'
     },
     link: {
         textDecoration: 'none'

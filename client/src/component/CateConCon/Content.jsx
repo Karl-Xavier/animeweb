@@ -49,12 +49,14 @@ export default function Content() {
         return { animeName, episodeNumber }
     }
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 useEffect(() => {
     async function fetchAnimeDetails() {
         try {
             const { animeName, episodeNumber } = parseEpisodeLink(epLink)
             
-            const response = await axios.get(`https://animeweb-orcin.vercel.app/api/${animeName}/${episodeNumber}`)
+            const response = await axios.get(`${backendUrl}api/${animeName}/${episodeNumber}`)
             setAnimeDetails(response.data)
         } catch (err) {
             console.error('Error fetching anime details:', err)
@@ -71,6 +73,18 @@ useEffect(() => {
     }
 }, [animeDetails])
 
+// create a download function 
+
+function handleDownload(link, resolution, title){
+    const a = document.createElement('a')
+    a.href = link
+    a.download = `ShonenStream-${title}-${resolution}`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    console.log({link, resolution, title})
+}
+
     return (
         <div className='container my-3'>
             {animeDetails ? (
@@ -83,7 +97,18 @@ useEffect(() => {
                         {animeDetails.prev && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.prev}>Back</Link>}
                         {animeDetails.next && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.next}>Next</Link>}
                     </div>
-                    <a href={animeDetails.downloadLink} target='_blank'><button style={styles.button}>Download <DownloadSimple weight='fill' size={22}/></button></a>
+                    <select style={styles.select} onChange={(e)=>{
+                        const selectedIndex = e.target.selectedIndex
+                        const selectedOption = animeDetails.directDownloadLink[selectedIndex]
+                        handleDownload(selectedOption.link, selectedOption.resolution, animeDetails.title)
+                    }}>
+                        <option value="" style={styles.option} className='option'>Download <DownloadSimple/></option>
+                        {animeDetails.directDownloadLink.map((data, index)=>(
+                            <option value={data.resolution} key={index} style={styles.option} className='option'>
+                                <span>{data.resolution} - mp4</span>
+                            </option>
+                        ))}
+                    </select>
                 </div>
             ) : (
                 <VideoSkeleton/>
@@ -104,18 +129,25 @@ const styles = {
         display: 'inline-block',
         maxWidth: 'max-content'
     },
-    button:{
-        width: '120px',
-        height: '40px',
+    select:{
+        width: '200px',
         borderRadius: '5px',
         padding: '10px',
+        border: 'none',
+        outline: 'none',
+        background: '#643c7d',
+        color: '#eee',
+        margin: '14px 0 0 10px',
+        appearance: 'none',
+        textAlign: 'center',
+        fontFamily: 'Inter'
+    },
+    option: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '10px',
-        color: '#eee',
-        background: '#643c7d',
-        margin: '14px 0 0 10px'
+        background: '#242424',
+        color: '#643c7d'
     }
 }

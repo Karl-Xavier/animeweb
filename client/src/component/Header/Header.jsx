@@ -16,7 +16,7 @@ export default function Header() {
         <header style={styles.header}>
             <SmallNav/>
             <Link to={'/'}>
-            <h1 style={styles.header.h1}>MyAnime_TV</h1>
+            <h1 style={styles.header.h1}>ShonenStream</h1>
             </Link>
             <Link to={'/searchpage'}>
                 <MagnifyingGlass weight='bold' size={22}/>

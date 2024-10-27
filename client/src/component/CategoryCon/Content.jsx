@@ -35,11 +35,13 @@ export default function Content() {
     const [animeInfo, setAnimeInfo] = useState(null)
     const navigate = useNavigate()
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
     useEffect(()=>{
         async function fetchResults(){
             try {
                 const trimmedName = name.startsWith('/') ? name.substring(1) : name;
-                const response = await axios.get(`https://animeweb-orcin.vercel.app/api/category/${trimmedName}`)
+                const response = await axios.get(`${backendUrl}api/category/${trimmedName}`)
                 setAnimeInfo(response.data)
             } catch (err){
                 console.log('Error', err)
@@ -135,7 +137,7 @@ export default function Content() {
             <h3 style={styles.episodeHeader}>Available Episodes</h3>
             <div style={styles.buttonDiv}>
                 {animeInfo.episodes && animeInfo.episodes.length > 0 && animeInfo.episodes.map((episode, index) => (
-                    <button style={currentStyles} key={index} onClick={() => handleRedirect(episode.epLink)}>
+                    <button style={{...currentStyles, fontFamily: 'Inter'}} key={index} onClick={() => handleRedirect(episode.epLink)}>
                         {episode.epNum}
                     </button>
                 ))}

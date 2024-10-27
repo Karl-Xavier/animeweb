@@ -24,7 +24,7 @@ async function fetchEpisodes(maxPages) {
 }
     
 router.get('/recent', async (req, res) => {
-    try {
+    try{
         const maxPages = 1
         const newEpisode = await fetchEpisodes(maxPages)
         console.log(newEpisode)

@@ -81,11 +81,13 @@ export default function Suggestions({ query, animeRes, animeload }) {
         return () => window.removeEventListener('resize', handleResize)
     },[])
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
     async function fetchSuggestions(input){
         if(input.length < 1) return
         try {
             setLoading(true)
-            const res = await axios.get(`https://animeweb-orcin.vercel.app/search/${input}`)
+            const res = await axios.get(`${backendUrl}search/${input}`)
             setLoading(false)
             setErr(null)
             const data = res.data

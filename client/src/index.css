@@ -8,10 +8,7 @@
   background: #121212;
   color: #e0e0e0;
 }
-
-colo{
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  
+.hov{
+  background: #643c7d;
+  color: #eee;
 }

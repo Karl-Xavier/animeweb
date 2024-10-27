@@ -14,6 +14,7 @@ const cateRoute = require('./routes/CategoryRoute')
 const nameRoute = require('./routes/Name')
 const newsRoute = require('./routes/News')
 const movieRoute = require('./routes/Movies')
+const popular = require('./routes/Popular')
 
 app.get('/',(req,res)=>{
     res.send('SERVER IS WORKING')
@@ -25,6 +26,7 @@ app.use('/api', cateRoute)
 app.use('/api', nameRoute)
 app.use('/api', newsRoute)
 app.use('/api', movieRoute)
+app.use('/api', popular)
         
 app.get('/search/:name', async(req,res)=>{
     const animeName = req.params.name

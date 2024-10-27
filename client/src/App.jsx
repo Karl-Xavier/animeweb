@@ -51,6 +51,7 @@ export default App
 const styles = {
   container: {
     display: 'flex',
+    fontFamily: 'Poppins'
   },
   mainContentOpen: {
     flex: 1,

@@ -27,7 +27,7 @@ export default function Slider({ anislide }) {
 
   return (
     <div className='w-full max-w-full h-52 lg:h-72 mb-3 relative'>
-      <img src={currentSlide.imgURL} alt={currentSlide.title} style={styles.main} className='w-full lg:w-1/2 lg:absolute lg:right-5'/>
+      <img src={currentSlide.imgURL} alt={currentSlide.title} style={styles.main} className='w-full lg:w-1/2 lg:absolute lg:right-5 lg:object-contain object-cover img-fluid'/>
       <h3 className='absolute bottom-0' style={styles.title}>{currentSlide.title.toUpperCase()} - {currentSlide.episodeNum.toUpperCase()}</h3>
       <Link to={currentSlide.link}><button className='absolute' style={styles.button}>Watch</button></Link>
     </div>
@@ -37,7 +37,6 @@ export default function Slider({ anislide }) {
 const styles = {
   main:{
     height: '100%',
-    objectFit: 'cover'
   },
   title:{
     background: '#121212',

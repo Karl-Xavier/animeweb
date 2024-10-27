@@ -36,10 +36,12 @@ useEffect(()=>{
   const [ loading, setLoading ] = useState(true)
   const [ err, setErr ] = useState(null)
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+
   useEffect(()=>{
     async function fetchAllMovies(){
       try {
-        const response = await axios.get('https://animeweb-orcin.vercel.app/api/movies')
+        const response = await axios.get(`${backendUrl}api/movies`)
         setMovies(response.data)
         setLoading(false)
         setErr(null)
@@ -90,18 +92,22 @@ const styles = {
   img:{
       width: '100%',
       height: '75%',
-      borderRadius: '5px',
-      objectFit: 'cover'
+      objectFit: 'cover',
+      margin: '0 0 2px 0'
   },
   episode: {
       textAlign: 'center',
       fontWeight: '500',
   },
   title: {
-      maxWidth: '100%',
-      color: '#6167ff',
-      fontWeight: '600',
-      lineHeight: '1.1'
+    maxWidth: '100%',
+    color: '#6167ff',
+    fontWeight: '600',
+    lineHeight: '16px',
+    height: '34px',
+    overflow: 'hidden',
+    margin: '5px 0 0 0',
+    fontFamily: 'Oswald'
   },
   bigScreen:{
       display: 'grid',

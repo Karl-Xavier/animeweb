@@ -5,6 +5,7 @@ import Err from '../Err'
 import HomeSkeleton from '../Skeleton/HomeSkeleton'
 import Slider from './Slider'
 import { Link } from 'react-router-dom'
+import Popular from '../Popular'
 
 export default function Content() {
 
@@ -39,10 +40,14 @@ export default function Content() {
     const [ err, setErr ] = useState(null)
     const [ loading, setLoading ] = useState(true)
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+    console.log(backendUrl)
+
     useEffect(()=>{
         async function fetchNewData(){
             try{
-                const response = await axios.get('https://animeweb-orcin.vercel.app/api/recent')
+                const response = await axios.get(`${backendUrl}api/recent`)
                 setRecentEpisode(response.data)
                 setLastThree(response.data.slice(-3))
                 setLoading(false)
@@ -56,7 +61,7 @@ export default function Content() {
     },[])
 
     useEffect(() => {
-          document.title = 'Watch, Stream and Download Anime Online'
+          document.title = 'Watch, Stream and Download Anime Online for free - ShonenStream'
     }, [])
 
     if(loading){
@@ -73,7 +78,7 @@ export default function Content() {
   return (
     <div className='container grid place-content-center'>
         <Slider anislide={lastThree}/>
-        <h2 style={{ fontWeight: '600', color: '#643c7d', fontSize: '1.3rem' }}><strong>RECENT RELEASE</strong></h2>
+        <h2 style={{ fontWeight: '600', color: '#643c7d', fontSize: '1.3rem', }}><strong>RECENT RELEASE</strong></h2>
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
@@ -87,6 +92,7 @@ export default function Content() {
                 )
             })}
         </div>
+        <Popular/>
     </div>
   )
 }
@@ -106,7 +112,11 @@ const styles = {
         maxWidth: '100%',
         color: '#6167ff',
         fontWeight: '600',
-        lineHeight: '1.1'
+        lineHeight: '16px',
+        height: '34px',
+        overflow: 'hidden',
+        margin: '5px 0 0 0',
+        fontFamily: 'Oswald'
     },
     bigScreen:{
         display: 'grid',

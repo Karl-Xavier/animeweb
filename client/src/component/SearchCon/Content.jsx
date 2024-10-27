@@ -40,11 +40,13 @@ export default function Content() {
     const [ loading, setLoading ] = useState(false)
     const [ err, setErr ] = useState(null)
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
     async function handleSearch(e){
         e.preventDefault()
         try{
             setLoading(true)
-            const response = await axios.get(`https://animeweb-orcin.vercel.app/search/${searchQuery}`)
+            const response = await axios.get(`${backendUrl}search/${searchQuery}`)
             setLoading(false)
             setAnimeRes(response.data)
         } catch(err){
@@ -115,7 +117,8 @@ const styles = {
     img: {
         width: '100%',
         height: '75%',
-        objectFit: 'cover'
+        objectFit: 'cover',
+        margin: '0 0 2px 0'
     },
     episode: {
         textAlign: 'center',
@@ -125,7 +128,11 @@ const styles = {
         maxWidth: '100%',
         color: '#6167ff',
         fontWeight: '600',
-        lineHeight: '1.1'
+        lineHeight: '16px',
+        height: '34px',
+        overflow: 'hidden',
+        margin: '5px 0 0 0',
+        fontFamily: 'Oswald'
     },
     bigScreen:{
         display: 'grid',

@@ -53,10 +53,12 @@ useEffect(()=>{
   const [ err, setErr ] = useState(null)
   const navigate = useNavigate()
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+
   useEffect(()=>{
     async function fetchNews(){
       try {
-        const response = await axios.get('https://animeweb-orcin.vercel.app/api/feeds')
+        const response = await axios.get(`${backendUrl}api/feeds`)
         setNews(response.data.articles)
         setLoading(false)
         setErr(null)
