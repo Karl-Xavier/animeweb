@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
         <div>
           <h3 style={{ color: '#6167ff' }} className='lg:text-right md:text-right'>UPDATE</h3>
-          <p className='lg:text-right md:text-right'>contact@shonenstream.com</p>
+          <p className='lg:text-right md:text-right'>contactshonenstream@gmail.com</p>
           <p style={{ fontSize: '14px' }} className='lg:text-right md:text-right'>Please Bear with the video ads. We Are working on it.</p>
         </div>
       </div>
