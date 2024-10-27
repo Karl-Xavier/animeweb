@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import img from '../assets/404.jpg'
 import Err from './Err'
+import { Link } from 'react-router-dom'
 
 export default function Popular() {
 
@@ -55,13 +56,15 @@ export default function Popular() {
       <div style={currentStyles} className='my-3'>
       {popular.map((pop, index)=>{
         return(
-          <div style={styles.card} key={index}>
+          <Link to={pop.link}>
+            <div style={styles.card} key={index}>
             <img src={pop.imgURL} alt="" style={styles.img} className='img-fluid'/>
             <div>
             <h2 style={{ color:'#6167ff', lineHeight: '16px', height: '34px', overflow: 'hidden' }}>{pop.title}</h2>
             <p><span style={{ color:'#6167ff' }}><b>Latest</b></span>: <span>{pop.latest}</span></p>
             </div>
           </div>
+          </Link>
         )
       })}
     </div>
