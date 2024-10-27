@@ -52,6 +52,7 @@ export default function Content() {
                 setLastThree(response.data.slice(-3))
                 setLoading(false)
                 setErr(null)
+                alert('If Page Refuses to Scroll, Tap on the screen')
             }catch(err){
                 setLoading(false)
                 setErr('Something Went Wrong')

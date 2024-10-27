@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import img from '../assets/404.jpg'
+import Err from './Err'
 
 export default function Popular() {
 
@@ -25,6 +26,7 @@ export default function Popular() {
   },[])
 
   const [ popular, setPopular ] = useState([])
+  const [ err, setErr ] = useState(null)
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -32,14 +34,20 @@ export default function Popular() {
     async function fetchPopular(){
       try {
         const data = await axios.get(`${backendUrl}api/popular`)
-        console.log(data.data)
         setPopular(data.data)
-      } catch (error) {
-        
+        setErr(null)
+      } catch(err){
+        setErr('Something Went Wrong')
       }
     }
     fetchPopular()
   },[])
+
+  if(err){
+    return(
+      <Err err={err}/>
+    )
+  }
 
   return (
     <div>
