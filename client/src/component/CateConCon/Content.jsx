@@ -91,7 +91,7 @@ return (
                 <div style={{ height: iframeDivSize.height, width: iframeDivSize.width, background: '#000' }} className='p-0 m-0'>
                     <Video video={animeDetails.videoSRC}/>
                 </div>
-                <div className='prev-next flex flex-row justify-between items-center p-3' style={styles.prevNext}>
+                <div className='prev-next flex flex-row justify-between items-center p-3 my-3' style={styles.prevNext}>
                     {animeDetails.prev && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.prev}>Back</Link>}
                     {animeDetails.next && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.next}>Next</Link>}
                 </div>

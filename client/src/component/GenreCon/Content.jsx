@@ -109,7 +109,7 @@ const styles = {
         color: '#6167ff',
         fontWeight: '600',
         lineHeight: '16px',
-        height: '34px',
+        height: '33px',
         overflow: 'hidden',
         margin: '5px 0 0 0',
         fontFamily: 'Oswald'
