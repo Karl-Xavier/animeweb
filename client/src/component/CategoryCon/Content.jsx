@@ -59,9 +59,11 @@ export default function Content() {
       }, [animeInfo])
 
     const beforeColon=(str)=>{
+        if(!str) return ''
         return str.split(':')[0].trim()
     }
     const afterColon=(str)=>{
+        if(!str) return ''
         return str.split(':')[1]?.trim()
     }
     function styleText(text){
