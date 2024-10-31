@@ -25,8 +25,7 @@ export default function Footer() {
           <p className='lg:text-right md:text-right'>contactshonenstream@gmail.com</p>
           <p className='lg:text-right md:text-right'>User Registration</p>
           <p className='lg:text-right md:text-right'>Comment Section</p>
-          <p className='lg:text-right md:text-right'>BookMark</p>
-          <p style={{ fontSize: '14px' }} className='lg:text-right md:text-right'>Please Bear with the video ads. We Are working on it.</p>
+          <p className='lg:text-right md:text-right'>BookMark</p>   
         </div>
       </div>
       <p style={{ textAlign: 'center' }}>Copyright &copy; ShonenStream</p>
