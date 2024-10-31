@@ -88,12 +88,12 @@ return (
         {animeDetails && (
             <div className='grid place-content-center w-full'>
                 <h2 style={styles.h2}>{animeDetails.title}</h2>
-                <div style={{ height: iframeDivSize.height, width: iframeDivSize.width}} className='p-0 mb-4 grid place-content-center'>
+                <div style={{ height: iframeDivSize.height, width: iframeDivSize.width}} className='p-0 mb-2 grid place-content-center'>
                     <Video hsl={animeDetails.hlsUrl} download={animeDetails.downloadLink}/>
                 </div>
                 <div className='prev-next flex flex-row justify-between items-center p-3 my-3' style={styles.prevNext}>
-                    {animeDetails.prev && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.prev}>Back</Link>}
-                    {animeDetails.next && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.next}>Next</Link>}
+                    {animeDetails.prev && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={`/watch${animeDetails.prev}`}>Back</Link>}
+                    {animeDetails.next && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={`/watch${animeDetails.next}`}>Next</Link>}
                 </div>
                 <button onClick={toggleText} style={styles.button}>{!isShown ? 'Show Download Option' : 'Close Download Option'}</button>
                 {isShown && (
