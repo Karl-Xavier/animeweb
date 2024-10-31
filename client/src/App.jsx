@@ -12,6 +12,7 @@ import SearchPage from './pages/SearchPage/SearchPage'
 import CateCon from './pages/CateCon/CateCon'
 import News from './pages/News/News'
 import Footer from './component/Footer/Footer'
+import NotFound from './pages/NotFound'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -36,6 +37,7 @@ function App() {
             <Route path='/searchpage' element={<SearchPage/>}/>
             <Route path='/watch/:epLink' element={<CateCon/>}/>
             <Route path='/feed' element={<News/>}/>
+            <Route path='*' element={<NotFound/>}/>
           </Routes>
         </div>
         <Footer/>

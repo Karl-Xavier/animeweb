@@ -3,6 +3,7 @@ import axios from 'axios'
 import NewsSkeleton from '../Skeleton/NewsSkeleton'
 import Err from '../Err'
 import { useNavigate } from 'react-router-dom'
+import backup from '../../../public/animeTvlogo.png'
 
 export default function Content() {
 
@@ -59,7 +60,19 @@ useEffect(()=>{
     async function fetchNews(){
       try {
         const response = await axios.get(`${backendUrl}api/feeds`)
-        setNews(response.data.articles)
+        const data = response.data.articles
+        const cleanedData = data.map(item => {
+          // Check if `img` exists and clean it
+          if (item.img) {
+              // Remove query parameters from `img` URL using regex
+              item.img = item.img.replace(/(\.jpe?g|\.png|\.gif|\.webp|\.svg)(\?.*)?$/i, '$1');
+          }
+          return item;
+      })
+        const filteredData = cleanedData.filter(items => items.title !== '[Removed]' && items.content !== '[Removed]')
+        const slicedData = filteredData.slice(0, 50)
+        setNews(slicedData)
+        console.log(slicedData)
         setLoading(false)
         setErr(null)
       } catch (err) {
@@ -94,7 +107,7 @@ if(err){
           {news.map((feed, index)=>{
             return (
             <div key={index} style={currentStyles} className='mb-5' id={feed.documentId}>
-              <img src={feed.img} alt={feed.title} style={styles.image}/>
+              <img src={feed.img ? feed.img : backup} alt={feed.title} style={styles.image}/>
               <h5 style={styles.title}>{feed.title}</h5>
               <div className="w-full flex flex-row justify-center items-center py-3">
               <a href={feed.newLink} target='_blank' style={styles.button}><button>Read More</button></a>
