@@ -15,6 +15,7 @@ router.get('/:animeName/:episodeNumber', async (req, res) => {
         const episodeData = response.data
 
         const videoSRC = episodeData.iframe || undefined
+        const cover = episodeData.current.image
         let downloadLink = ''
         let directDownloadLink = []
 
@@ -43,29 +44,29 @@ router.get('/:animeName/:episodeNumber', async (req, res) => {
                     })
                 }
             })
-        } catch (error) {
-            // error response
+        } catch (err) {
+            res.status(500).json({ message: err.message })
         }
 
-        /* try {
-            const url = `${webURL}${animeName}-episode-${episodeNumber}`
-            console.log(url)
-            const $ = await FetchHTML(url)
+        const encodedUrl = btoa(videoSRC)
 
-            $()
-        } catch (error) {
-            
-        } */
+        const videoApiURL = `https://animeyubi.com/api/v4/streamani/videos/?src=${encodedUrl}`
+        const responseData = await axios.get(videoApiURL)
+        const vid = responseData.data[0]
+        const hlsUrl = vid.file
+
         
         const formatSlug = (slug) => (slug ? `/${slug}` : null)
 
         const VideoDetails = {
             title: episodeData.current.title || 'Unknown Title',
             videoSRC,
+            hlsUrl,
             downloadLink: downloadLink || 'Download link not available',
             next: formatSlug(episodeData.next?.full_slug),
             prev: formatSlug(episodeData.prev?.full_slug),
             directDownloadLink,
+            cover
         }
         res.json(VideoDetails)
         console.log(VideoDetails)

@@ -73,7 +73,7 @@ export default function Content() {
     }
 
     function handleRedirect(link){
-        navigate(link)
+        navigate(`/watch${link}`)
     }
 
     if(animeInfo === null){

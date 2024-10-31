@@ -12,7 +12,6 @@ import SearchPage from './pages/SearchPage/SearchPage'
 import CateCon from './pages/CateCon/CateCon'
 import News from './pages/News/News'
 import Footer from './component/Footer/Footer'
-import ErrorPage from './pages/ErrorPage/404'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
@@ -35,9 +34,8 @@ function App() {
             <Route path='/genre/:genre' element={<GenreResult/>}/>
             <Route path='/category/:name' element={<Category/>}/>
             <Route path='/searchpage' element={<SearchPage/>}/>
-            <Route path='/:epLink' element={<CateCon/>}/>
+            <Route path='/watch/:epLink' element={<CateCon/>}/>
             <Route path='/feed' element={<News/>}/>
-            <Route path='/*' element={<ErrorPage/>}/>
           </Routes>
         </div>
         <Footer/>

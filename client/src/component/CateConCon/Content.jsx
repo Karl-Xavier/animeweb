@@ -77,7 +77,7 @@ function toggleText(){
     setIsShown(!isShown)
 }
 
-if(!animeDetails){
+if(animeDetails === null){
     return(
         <VideoSkeleton/>
     )
@@ -88,8 +88,8 @@ return (
         {animeDetails && (
             <div className='grid place-content-center w-full'>
                 <h2 style={styles.h2}>{animeDetails.title}</h2>
-                <div style={{ height: iframeDivSize.height, width: iframeDivSize.width, background: '#000' }} className='p-0 m-0'>
-                    <Video video={animeDetails.videoSRC}/>
+                <div style={{ height: iframeDivSize.height, width: iframeDivSize.width}} className='p-0 mb-4 grid place-content-center'>
+                    <Video hsl={animeDetails.hlsUrl} download={animeDetails.downloadLink}/>
                 </div>
                 <div className='prev-next flex flex-row justify-between items-center p-3 my-3' style={styles.prevNext}>
                     {animeDetails.prev && <Link style={{ fontWeight: '400', color: '#ee49fd'}} to={animeDetails.prev}>Back</Link>}

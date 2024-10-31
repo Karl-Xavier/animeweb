@@ -91,7 +91,6 @@ export default function Suggestions({ query, animeRes, animeload }) {
             setLoading(false)
             setErr(null)
             const data = res.data
-            console.log(data)
             setSuggestions(data)
         } catch (err){
             console.log('err', err)

@@ -83,7 +83,7 @@ export default function Content() {
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
-                 <Link to={episode.link} key={index}>
+                 <Link to={`/watch${episode.link}`} key={index}>
                     <div className="w-40 h-72 lg:w-48 md:w-44 text-center">
                    <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid" />
                    <p style={styles.title}>{episode.title}</p>
