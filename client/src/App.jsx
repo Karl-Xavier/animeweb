@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css'
 import Header from './component/Header/Header'
@@ -13,13 +13,18 @@ import CateCon from './pages/CateCon/CateCon'
 import News from './pages/News/News'
 import Footer from './component/Footer/Footer'
 import NotFound from './pages/NotFound'
+import { track } from '@vercel/analytics'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
 
+  const location = useLocation()
+
   function toggleNavVisibility(){
     setIsNavOpen(!isNavOpen)
   }
+
+  useEffect(()=>{ track(location.pathname) },[location])
 
   return (
     <div className='mainCol w-full h-dvh' style={styles.container}>
