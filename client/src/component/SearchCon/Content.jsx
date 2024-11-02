@@ -57,12 +57,6 @@ export default function Content() {
         }
     }
 
-    if(loading){
-        return(
-            <HomeSkeleton/>
-        )
-    }
-
     if(err){
         return(
             <Err err={err}/>
@@ -94,6 +88,9 @@ export default function Content() {
         })}
         </div>
         </div>
+        {loading && (
+            <HomeSkeleton/>
+        )}
     </div>
   )
 }
