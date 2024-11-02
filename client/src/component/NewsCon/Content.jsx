@@ -3,7 +3,7 @@ import axios from 'axios'
 import NewsSkeleton from '../Skeleton/NewsSkeleton'
 import Err from '../Err'
 import { useNavigate } from 'react-router-dom'
-import backup from '../../../public/animeTvlogo.png'
+import backup from '../../assets/animeTvlogo.png'
 
 export default function Content() {
 
