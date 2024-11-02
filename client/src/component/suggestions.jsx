@@ -54,7 +54,7 @@ export default function Suggestions({ query, animeRes, animeload }) {
             overflow: 'hidden'
         },
         loaderli:{
-            display: 'flex',
+            display: loading === false && !err ? 'none' : 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
@@ -111,7 +111,7 @@ export default function Suggestions({ query, animeRes, animeload }) {
     <div className='w-full'>
         <div style={currentWidth}>
             <ul style={styles.ul}>
-            {animeRes.length === 0 && !animeload && (
+            {animeRes.length === 0 && !animeload && suggestions.length > 0 ? (
             suggestions.map((anisuge, index)=>{
                 return (
                 <Link to={anisuge.link} key={index}>
@@ -121,10 +121,10 @@ export default function Suggestions({ query, animeRes, animeload }) {
                     </li>
                 </Link>
                 )
-            }))}
-            {loading && (
+            })) : (
                 <li style={styles.loaderli}>
-                    <Loader/>
+                    {loading && <Loader/>}
+                    {err && ( <p style={{ color: 'indianred', fontWeight: 'bold' }}>{err}</p> )}
                 </li>
             )}
             </ul>

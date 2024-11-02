@@ -48,19 +48,17 @@ export default function Content() {
             setLoading(true)
             const response = await axios.get(`${backendUrl}search/${searchQuery}`)
             setLoading(false)
+            if(response.data.length === 0){
+                setErr(`No Results Found for ${searchQuery}`)
+            } else {
             setAnimeRes(response.data)
             setErr(null)
+        }
         } catch(err){
             console.log('Error',err)
             setLoading(false)
             setErr('Something went wrong')
         }
-    }
-
-    if(err){
-        return(
-            <Err err={err}/>
-        )
     }
 
   return (
@@ -90,6 +88,9 @@ export default function Content() {
         </div>
         {loading && (
             <HomeSkeleton/>
+        )}
+        {err && (
+            <Err err={err}/>
         )}
     </div>
   )
