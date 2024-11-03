@@ -1,0 +1,55 @@
+/* Parent container */
+.skeleton-container {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Skeleton loading effect */
+  .skeleton-video, .skeleton-epbutton, .skeleton-download {
+    background: linear-gradient(90deg, #2a2a2a, #202020, #2a2a2a);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  
+  /* Shimmer animation */
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  /* Video skeleton */
+  .skeleton-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  
+  /* Buttons container */
+  .skeleton-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  
+  /* Episode buttons */
+  .skeleton-epbutton {
+    width: 30%;
+    height: 28px;
+  }
+  
+  /* Download button */
+  .skeleton-download {
+    width: 120px;
+    height: 40px;
+    align-self: flex-start;
+  }
+  

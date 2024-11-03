@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mainCol{
+  /* background: #1c1c28;
+  color: #e0e0e0; */
+  background: #121212;
+  color: #e0e0e0;
+}
+.hov{
+  background: #643c7d;
+  color: #eee;
+}
