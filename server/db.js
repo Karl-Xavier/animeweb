@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const nodeEnv = require('./config/nodeEnv')
 
-const mongoURI = nodeEnv === 'production' ? process.env.MONGO_PROD : process.env.MONGO_DEV
+const mongoURI = nodeEnv === 'production' ? 'mongodb+srv://uwasbruno256:7pZuPhKNAZBNwRMD@shonenstream.pt6qv.mongodb.net/shonenstream?retryWrites=true&w=majority&appName=shonenstream' : 'mongodb://localhost:27017/shonenstream'
 
 const connectDB = async () => {
     try {

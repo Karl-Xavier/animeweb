@@ -1,7 +1,7 @@
 const nodeMailer = require('nodemailer')
 const nodeEnv = require('./config/nodeEnv')
 
-const verificationLink = nodeEnv === 'production' ? process.env.FRONTEND_PROD : process.env.FRONTEND_DEV
+const verificationLink = nodeEnv === 'production' ? 'https://myanimetv.vercel.app/confirmation' :'http://localhost:5173/confirmation'
 
 async function sendVerification(email, token, res){
     const transporter = nodeMailer.createTransport({
@@ -10,8 +10,8 @@ async function sendVerification(email, token, res){
         port: 587,
         secure: false,
         auth: {
-            user: process.env.USER,
-            pass: process.env.PASS
+            user: 'contactshonenstream@gmail.com',
+            pass: 'xxcvxhsjjaznhgte'
         }
     })
 
@@ -19,7 +19,7 @@ async function sendVerification(email, token, res){
         const info = await transporter.sendMail({
             from:{
                 name: 'ShonenStream',
-                address: process.env.USER
+                address: 'contactshonenstream@gmail.com'
             },
             to: email,
             subject: 'Email Verification',
