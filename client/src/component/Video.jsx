@@ -2,8 +2,6 @@ import React, { useRef, useState, useEffect } from 'react'
 import Hls from 'hls.js'
 import { ArrowClockwise, ArrowCounterClockwise, ArrowsIn, ArrowsOut, Download, FastForward, Gear, Pause, Play, Rewind } from 'phosphor-react'
 import './video.css'
-import test from '../assets/test.mp4'
-import poster from '../assets/404.jpg'
 
 export default function Video({ hsl, download }) {
   const videoRef = useRef(null)
