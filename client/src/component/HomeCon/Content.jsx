@@ -138,7 +138,7 @@ export default function Content() {
                  </Link>
                  <div className='w-full h-auto flex flex-row justify-between items-center p-2' style={styles.bottomCard}>
                     <span style={styles.bottomSpan}>Ep {episode.episodeNum.replace('Episode','').trim()}</span>
-                    <button onClick={() => addBookMark(episode.title, episode.episodeNum, episode.link, episode.imgURL)}><Bookmark size={23} weight={isBookmarked(episode.title) ? 'fill' : 'bold'} color={isBookmarked(episode.title) ? '#634c7d' : 'white'}/></button>
+                    <button onClick={() => addBookMark(episode.title, episode.episodeNum, episode.link, episode.imgURL)}><Bookmark size={20} weight={isBookmarked(episode.title) ? 'fill' : 'bold'} color={isBookmarked(episode.title) ? '#634c7d' : 'white'}/></button>
                  </div>
                  </div>
                 )
@@ -162,7 +162,8 @@ const styles = {
         width: 'max-content',
         padding: '2px',
         borderRadius: '5px',
-        margin: '0 0 2px 0'
+        margin: '0 0 2px 0',
+        fontSize: '14px'
     },
     img:{
         width: '100%',
