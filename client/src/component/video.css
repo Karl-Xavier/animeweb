@@ -1,9 +1,10 @@
 .video-player{
   position: relative;
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: 100%;
   overflow: hidden;
   background-color: #000;
+  padding: 0;
 }
 
 .main-player{
@@ -137,6 +138,7 @@
   width: 200px;
   height: 250px;
   z-index: 20;
+  overflow-y: scroll;
 }
 
 .settings .playback span{

@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react'
 import Hls from 'hls.js'
-import { ArrowClockwise, ArrowCounterClockwise, ArrowsIn, ArrowsOut, Download, FastForward, Gear, Pause, Play, Rewind } from 'phosphor-react'
+import { ArrowClockwise, ArrowCounterClockwise, ArrowsIn, Download, Gear, Pause, Play } from 'phosphor-react'
 import './video.css'
 
-export default function Video({ hsl, download }) {
+export default function Video({ hsl, vipani, download }) {
   const videoRef = useRef(null)
-  const [blob, setBlob] = useState('')
+  const hlsRef = useRef(null)
   const [ isPLaying, setIsPlaying ] = useState(false)
   const [ isScreen, setIsScreen ] = useState(false)
   const [ progress, setProgress ] = useState(0)
@@ -14,30 +14,104 @@ export default function Video({ hsl, download }) {
   const [playBack, setPlayBack] = useState(1)
   const [ playbackDiv, setPlayBackDiv ] = useState(false)
 
-  useEffect(() => {
-    async function fetchBlob() {
-      try {
-        const response = await fetch(hsl)
-        const data = await response.blob()
-        const url = URL.createObjectURL(data)
-        setBlob(url)
-      } catch (err) {
-        console.error('Error Fetching Blob', err)
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+  const hlsUrl = `${backendUrl}api/proxy?url=${encodeURIComponent(hsl)}`
+  const vipaniUrl = vipani
+
+/*   useEffect(() => {
+    if(videoRef.current){
+      if(Hls.isSupported()){
+        const hls = new Hls({ debug: true })
+        hls.loadSource(hlsUrl)
+        hls.attachMedia(videoRef.current)
+        hls.on(Hls.Events.MANIFEST_PARSED, ()=>{
+          console.log('Manifest loaded, found ' + hls.levels.length + ' quality level');
+        })
+        hls.on(Hls.Events.ERROR, (e,d)=>{
+          if(d.fatal){
+            switch(d.type){
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                console.log('Network Error')
+                hls.startLoad()
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                console.log('Media Error')
+                hls.recoverMediaError()
+                break;
+              case Hls.ErrorTypes.OTHER_ERROR:
+                console.log('Other Error')
+                break;
+              default:
+                console.log('Fatal Error')
+                break;
+            }
+          }
+        })
+
+
+        return () => {
+          if(hls){
+            hls.destroy()
+          }
+        }
+
       }
     }
+  }, [hsl]) */
 
-    if (Hls.isSupported()) {
-      const hls = new Hls()
-      hls.loadSource(hsl)
-      hls.attachMedia(videoRef.current)
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        
-      })
-      return () => hls.destroy()
-    } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-      fetchBlob()
+  useEffect(() => {
+    if (videoRef.current) {
+      if (Hls.isSupported()) {
+        const hls = new Hls({ debug: true });
+        hlsRef.current = hls;
+
+        let currentUrl = vipaniUrl; // Start with vipaniUrl
+
+        const loadSource = (url) => {
+          currentUrl = url;
+          hls.loadSource(url);
+          hls.attachMedia(videoRef.current);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            console.log(`Loaded ${url}`);
+          });
+        };
+
+        hls.on(Hls.Events.ERROR, (e, d) => {
+          if (d.fatal) {
+            switch (d.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                console.log("Network Error");
+                if (currentUrl === vipaniUrl) {
+                  console.log("Switching to fallback URL");
+                  loadSource(hlsUrl); // Switch to fallback
+                } else {
+                  console.log("Both URLs failed to load");
+                }
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                console.log("Media Error");
+                hls.recoverMediaError();
+                break;
+              default:
+                console.log("Fatal Error");
+                break;
+            }
+          }
+        });
+
+        loadSource(vipaniUrl); // Load the primary URL initially
+
+        return () => {
+          if (hls) {
+            hls.destroy();
+          }
+        };
+      }
     }
-  }, [hsl])
+  }, []);
+
+  
 
   const toggleFullScreen = () => {
     const videoElement = videoRef.current
@@ -125,9 +199,10 @@ export default function Video({ hsl, download }) {
   }
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full absolute'>
       <div className='video-player' onMouseEnter={mouseOverCtrl} onMouseLeave={mouseLeaveCtrl}>
-        <video ref={videoRef} src={blob || ''} className='main-player'></video>
+        <video ref={videoRef} className='main-player'></video>
+        {/* <iframe ref={videoRef} src={videoSrc} frameborder="0"></iframe> */}
       <div className={isScreen ? 'controls active' : 'controls'}>
       <div className="progress" onClick={handleSeek}>
         <div className="progress-bar" style={{ width: `${progress}%` }}>

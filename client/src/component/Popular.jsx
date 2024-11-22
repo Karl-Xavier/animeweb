@@ -56,8 +56,8 @@ export default function Popular() {
       <div style={currentStyles} className='my-3'>
       {popular.map((pop, index)=>{
         return(
-          <Link to={pop.link}>
-            <div style={styles.card} key={index}>
+          <Link to={pop.link} key={index}>
+            <div style={styles.card}>
             <img src={pop.imgURL} alt="" style={styles.img} className='img-fluid'/>
             <div>
             <h2 style={{ color:'#6167ff', lineHeight: '16px', height: '34px', overflow: 'hidden' }}>{pop.title}</h2>

@@ -5,10 +5,11 @@ export default function HomeSkeleton() {
 
     function getStyles(){
         const screen = window.innerWidth
-        const breakPoint = 768
+        const breakPoint = 900
+        const breakpoint2 = 600
         if(screen > breakPoint){
             return styles.bigScreen
-        }else if(screen < breakPoint){
+        }else if(screen <= breakpoint2){
             return styles.smScreen
         }else{
             return styles.midScreen

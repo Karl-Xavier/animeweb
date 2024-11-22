@@ -1,8 +1,10 @@
-import { CalendarCheck, FilmSlate, House, List, Newspaper, Star, X } from 'phosphor-react'
+import { FilmSlate, House, List, Newspaper, X } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import SearchBar from '../Search/SearchBar'
 import { Link, useLocation } from 'react-router-dom'
+import avatar from '../../assets/avatar.jpg'
+import axios from 'axios'
 
 export default function SmallNav() {
   const [ isNavOpen, setIsNavOpen ] = useState(false)
@@ -14,6 +16,25 @@ export default function SmallNav() {
   const homeRoute = location.pathname === '/'
   const newRoute = location.pathname.startsWith('/feed')
   const movieRoute = location.pathname.startsWith('/movies')
+
+  const [ currentUser, setCurrentUser ] = useState(null)
+
+  useEffect(()=>{
+    const current = localStorage.getItem('currentUser')
+
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+    async function fetchCurrentUser(){
+      try {
+        const response = await axios.get(`${backendUrl}api/info/user?id=${current}`)
+        setCurrentUser(response.data)
+      } catch(err){
+        console.log('An error Occurred', err)
+      }
+    }
+    fetchCurrentUser()
+
+  },[])
 
   function toggleNavVisibility(){
     setIsNavOpen(!isNavOpen)
@@ -67,6 +88,12 @@ export default function SmallNav() {
       color: 'inherit',
       padding: '10px',
      },
+     profile:{
+      width: '35px',
+      height: '35px',
+      borderRadius: '50%',
+      objectFit: 'cover'
+    }
   }
 
   return (
@@ -77,6 +104,22 @@ export default function SmallNav() {
           <button style={styles.expandbtn} onClick={()=> setIsNavOpen(false)}><X size={24} weight='bold'/></button>
           <SearchBar handleExpand={handleExpand} setIsExpanded={setIsExpanded} setIsNavOpen={setIsNavOpen}/>
           <ul style={styles.ul}>
+              <li style={styles.li} onClick={()=>{
+                setIsNavOpen(false)
+                setIsExpanded(false)
+                }}>
+                {currentUser ? (
+                  <Link style={{...styles.link, justifyContent: 'flex-start', gap: '10px'}} to={`/profile?id=${currentUser.userId}&username=${currentUser.username}`}>
+                    <img src={currentUser.profileImg === '' ? avatar : currentUser.profileImg} alt='You' style={styles.profile}/>
+                    <span style={{ maxWidth: '75%', overflow: 'hidden', whiteSpace: 'nowrap' }}>{currentUser.username}</span>
+                  </Link>
+                ):(
+                  <p style={{...styles.link, width: '70%'}}>
+                  <img src={avatar} alt='You' style={styles.profile}/>
+                  <Link to={'/register'}>Register</Link> | <Link to={'/login'}>Login</Link>
+                  </p>
+                )}
+              </li>
               <li onClick={()=>{
                 setIsNavOpen(false)
                 setIsExpanded(false)

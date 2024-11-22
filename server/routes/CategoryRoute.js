@@ -4,6 +4,7 @@ const FetchHTML = require('../fetch')
 const webURL = require('../url')
 const axios = require('axios')
 const cheerio = require('cheerio')
+const { setBaseImg } = require('../proxyUrl')
 
 router.get('/category/:name', async (req, res) => {
     const name = req.params.name

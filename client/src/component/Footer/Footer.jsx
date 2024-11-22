@@ -1,4 +1,4 @@
-//import { FacebookLogo, InstagramLogo, TwitterLogo } from 'phosphor-react'
+import { DiscordLogo, WhatsappLogo } from 'phosphor-react'
 import React from 'react'
 
 export default function Footer() {
@@ -12,23 +12,21 @@ export default function Footer() {
             {/* <p className='flex flex-row justify-start items-center'><FacebookLogo/> &nbsp; shonenstream official</p>
             <p className='flex flex-row justify-start items-center'><TwitterLogo/> &nbsp; shonenstream official</p>
             <p className='flex flex-row justify-start items-center'><InstagramLogo/> &nbsp; shonenstream official</p> */}
-            <p>None for now</p>
+            <a href="https://whatsapp.com/channel/0029VavGnbUD8SE5ZeGk0a2F" target='_blank'><p className='flex flex-row justify-start items-center'><WhatsappLogo size={22} weight='fill' color='#09a309'/> &nbsp; Official Shonenstream</p></a>
+            {/* <a href="https://discord.gg/BR2CNS64" target='_blank'><p className='flex flex-row justify-start items-center'><DiscordLogo size={22} weight='fill' color='#7289da'/> &nbsp; Official Shonenstream</p></a> */}
           </div>
         </div>
         <div className='lg:text-center md:text-center'>
           <h3 style={{ color: '#6167ff' }}>PROVIDERS</h3>
-          <p>Gogoanime</p>
-          <p><a href="https://animeyubi.com">AnimeYubi</a></p>
+          <p><a href="https://anitaku.pe/" target='_blank'>Gogoanime</a></p>
+          <p><a href="https://animeyubi.com" target='_blank'>AnimeYubi</a></p>
         </div>
         <div>
-          <h3 style={{ color: '#6167ff' }} className='lg:text-right md:text-right'>UPDATE</h3>
-          <p className='lg:text-right md:text-right'>contactshonenstream@gmail.com</p>
-          <p className='lg:text-right md:text-right'>User Registration</p>
-          <p className='lg:text-right md:text-right'>Comment Section</p>
-          <p className='lg:text-right md:text-right'>BookMark</p>   
+          <h3 style={{ color: '#6167ff' }} className='lg:text-right md:text-right'>Contact</h3>
+          <p className='lg:text-right md:text-right'><a href="mailto:contactshonenstream@gmail.com">contactshonenstream@gmail.com</a></p>
         </div>
       </div>
-      <p style={{ textAlign: 'center' }}>Copyright &copy; ShonenStream</p>
+      <p style={{ textAlign: 'center', margin: '10px 0 10px 0' }}>Copyright &copy; ShonenStream {new Date().getFullYear()}</p>
     </footer>
   )
 }

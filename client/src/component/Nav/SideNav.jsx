@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
-import { House, List, MagnifyingGlass, Star, FilmSlate, X, Newspaper, } from 'phosphor-react'
+import React, { useEffect, useState } from 'react'
+import { House, List, MagnifyingGlass, FilmSlate, X, Newspaper, } from 'phosphor-react'
 import { Link, useLocation } from 'react-router-dom'
 import SearchBar from '../Search/SearchBar'
+import axios from 'axios'
+import avatar from '../../assets/avatar.jpg'
 
 export default function SideNav({ isNavOpen, toggleSlider, setIsNavOpen }) {
   const location = useLocation()
@@ -10,6 +12,25 @@ export default function SideNav({ isNavOpen, toggleSlider, setIsNavOpen }) {
   const homeRoute = location.pathname === '/'
   const newRoute = location.pathname.startsWith('/feed')
   const movieRoute = location.pathname.startsWith('/movies')
+
+  const [ currentUser, setCurrentUser ] = useState(null)
+
+  useEffect(()=>{
+    const current = localStorage.getItem('currentUser')
+
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+    async function fetchCurrentUser(){
+      try {
+        const response = await axios.get(`${backendUrl}api/info/user?id=${current}`)
+        setCurrentUser(response.data)
+      } catch(err){
+        console.log('An error Occurred', err)
+      }
+    }
+    fetchCurrentUser()
+
+  },[])
 
   function showNav(){
     setIsNavOpen(!isNavOpen)
@@ -23,6 +44,19 @@ export default function SideNav({ isNavOpen, toggleSlider, setIsNavOpen }) {
             <div style={styles.contentContainer}>
                 <SearchBar/>
                 <ul style={styles.ul}>
+                  <li style={styles.li}>
+                    {currentUser ? (
+                      <Link style={{...styles.link, justifyContent: 'flex-start', gap: '10px'}} to={`/profile?id=${currentUser.userId}&username=${currentUser.username}`}>
+                        <img src={currentUser.profileImg === '' ? avatar : currentUser.profileImg} alt='You' style={styles.profile}/>
+                        <span style={{ maxWidth: '75%', overflow: 'hidden', whiteSpace: 'nowrap' }}>{currentUser.username}</span>
+                      </Link>
+                    ):(
+                      <p style={styles.link}>
+                      <img src={avatar} alt='You' style={styles.profile}/>
+                      <Link to={'/register'}>Register</Link> | <Link to={'/login'}>Login</Link>
+                      </p>
+                    )}
+                  </li>
                   <li style={{...styles.li, background: homeRoute ? "#f9f9f9" : 'transparent', color: homeRoute ? '#242424' : 'inherit'}}>
                     <Link style={styles.link} to={'/'}>Home <House size={24} weight='fill'/></Link>
                   </li>
@@ -38,6 +72,16 @@ export default function SideNav({ isNavOpen, toggleSlider, setIsNavOpen }) {
             <div>
               <ul style={styles.ul}>
                 <li style={styles.icon} onClick={showNav}><MagnifyingGlass weight='bold' size={24}/></li>
+                <li style={styles.icon}>
+                  {currentUser ? (
+                    <Link style={styles.iconLink} to={`/profile?id=${currentUser.userId}&username=${currentUser.username}`}>
+                  <img src={currentUser.profileImg === '' ? avatar : currentUser.profileImg} alt="You" style={{...styles.profile, width: '30px', height: '30px'}}/>
+                  </Link>):(
+                    <p style={styles.iconLink}>
+                    <img src={avatar} alt="You" style={{...styles.profile, width: '30px', height: '30px'}}/>
+                    </p>
+                  )}
+                </li>
                 <li style={{...styles.icon, color: homeRoute ? '#ee49fd' : 'inherit'}}>
                   <Link style={styles.iconLink} to={'/'}><House size={24} weight='fill'/></Link>
                 </li>
@@ -123,4 +167,11 @@ icon: {
   width: '100%',
   marginBottom: '23px',
 },
+profile:{
+  width: '35px',
+  height: '35px',
+  borderRadius: '50%',
+  objectFit: 'cover'
+}
+
 }

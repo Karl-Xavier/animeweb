@@ -7,15 +7,17 @@ import Slider from './Slider'
 import { Link } from 'react-router-dom'
 import Popular from '../Popular'
 import { toast } from 'react-toastify'
+import { Bookmark } from 'phosphor-react'
 
 export default function Content() {
 
     function getStyles(){
         const screen = window.innerWidth
-        const breakPoint = 768
+        const breakPoint = 900
+        const breakpoint2 = 600
         if(screen > breakPoint){
             return styles.bigScreen
-        }else if(screen < breakPoint){
+        }else if(screen <= breakpoint2){
             return styles.smScreen
         }else{
             return styles.midScreen
@@ -37,9 +39,11 @@ export default function Content() {
     },[])
 
     const [recentEpisode, setRecentEpisode] = useState([])
+    const [ bookmark, setBookmark ] = useState([])
     const [ lastThree, setLastThree ] = useState([])
     const [ err, setErr ] = useState(null)
     const [ loading, setLoading ] = useState(true)
+    const id = localStorage.getItem('currentUser')
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -62,6 +66,19 @@ export default function Content() {
         fetchNewData()
     },[])
 
+    async function getBookMarkData(){
+        try {
+            const book = await axios.get(`${backendUrl}api/bookmark/get?id=${id}`)
+            setBookmark(book.data)
+        } catch(err){
+            console.log(err.message)
+        }
+    }
+
+    useEffect(()=>{
+        getBookMarkData()
+    },[])
+
     useEffect(() => {
           document.title = 'Watch, Stream and Download Anime Online for free - ShonenStream'
     }, [])
@@ -77,6 +94,29 @@ export default function Content() {
         )
     }
 
+    const isBookmarked = (title) => bookmark.some((b) => b.title === title)
+
+    async function addBookMark(title, episode, link, imgUrl){
+        const payload = {}
+        payload.title = title
+        payload.episode = episode
+        payload.link = link
+        payload.imgUrl = imgUrl
+        console.log(payload)
+        try {
+            const response = await axios.post(`${backendUrl}api/bookmark/add?id=${id}`, payload)
+            toast.success(response.data.message,{
+                position: 'top-right'
+            })
+            getBookMarkData()
+        } catch(err){
+            console.log('An Error Occurred',err.message)
+            toast.error(err.response.data.message,{
+                position: 'top-right'
+            })
+        }
+    }
+
   return (
     <div className='container grid place-content-center'>
         <Slider anislide={lastThree}/>
@@ -84,13 +124,18 @@ export default function Content() {
         <div className="my-3" style={currentStyles}>
             {recentEpisode.map((episode, index) => {
                 return (
-                 <Link to={`/watch${episode.link}`} key={index}>
-                    <div className="w-40 h-72 lg:w-48 md:w-44 text-center">
-                   <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid" />
-                   <p style={styles.title}>{episode.title}</p>
-                   <span style={styles.episode}>{episode.episodeNum}</span>
-                 </div>
+                 <div className='relative' key={index}>
+                 <Link to={`/watch${episode.link}`}>
+                    <div className="w-40 h-72 lg:w-48 md:w-44 text-center relative">
+                        <img style={styles.img} src={episode.imgURL} alt="" className="img-fluid" />
+                        <p style={styles.title}>{episode.title}</p>
+                    </div>
                  </Link>
+                 <div className='w-full h-auto flex flex-row justify-between items-center p-2' style={styles.bottomCard}>
+                    <span style={styles.bottomSpan}>Ep {episode.episodeNum.replace('Episode','').trim()}</span>
+                    <button disabled={id ? false : true} onClick={() => addBookMark(episode.title, episode.episodeNum, episode.link, episode.imgURL)}><Bookmark size={23} weight={isBookmarked(episode.title) ? 'fill' : 'bold'} color={isBookmarked(episode.title) ? '#634c7d' : 'white'}/></button>
+                 </div>
+                 </div>
                 )
             })}
         </div>
@@ -100,9 +145,23 @@ export default function Content() {
 }
 
 const styles = {
+    bottomCard:{
+        position: 'absolute',
+        bottom: '43px',
+        background: 'rgba(18, 18, 18, .7)',
+        color: '#eee'
+    },
+    bottomSpan:{
+        background: '#634c7d',
+        color: '#eee',
+        width: 'max-content',
+        padding: '2px',
+        borderRadius: '5px',
+        margin: '0 0 2px 0'
+    },
     img:{
         width: '100%',
-        height: '75%',
+        height: '85%',
         objectFit: 'cover',
         margin: '0 0 2px 0'
     },

@@ -5,11 +5,28 @@ const FetchHTML = require('./fetch')
 const webURL = require('./url')
 const connectDB = require('./db')
 
+const allowedOrigins = ['https://s3taku.com', 'https://gogoplay.io', 'https://s3embtaku.pro', 'http://localhost:5173', 'https://myanimetv.vercel.app']
+
+const corsOption = {
+    origin: function(origin, callback){
+        if(allowedOrigins.indexOf(origin) !== -1 || !origin){
+            callback(null, true)
+        }else{
+            callback(new Error('Not Allowed by CORS'))
+        }
+    }
+}
+
 const app = express()
 const PORT = process.env.PORT || 5003
-app.use(cors())
+app.use(cors(corsOption))
 app.use(express.json({limit: '1gb'}))
 connectDB()
+
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} - ${req.url}`);
+    next();
+})
 
 const auth = require('./routes/AuthRoute')
 const homeRoute = require('./routes/HomeRoute')
@@ -19,11 +36,15 @@ const nameRoute = require('./routes/Name')
 const newsRoute = require('./routes/News')
 const movieRoute = require('./routes/Movies')
 const popular = require('./routes/Popular')
+const proxy = require('./routes/Proxym3u8')
+const user = require('./routes/UserInfo')
+const bookmark = require('./routes/BookMarkRoute')
+const comment = require('./routes/CommentRoute')
+const reply = require('./routes/Replyroute')
 
 app.get('/',(req,res)=>{
     res.send('SERVER IS WORKING')
-})
-
+}) 
 app.use('/api/auth', auth)
 app.use('/api', homeRoute)
 app.use('/api', genreRoute)
@@ -32,6 +53,11 @@ app.use('/api', nameRoute)
 app.use('/api', newsRoute)
 app.use('/api', movieRoute)
 app.use('/api', popular)
+app.use('/api', proxy)
+app.use('/api', user)
+app.use('/api', bookmark)
+app.use('/api', comment)
+app.use('/api', reply)
         
 app.get('/search/:name', async(req,res)=>{
     const animeName = req.params.name

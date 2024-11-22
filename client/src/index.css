@@ -12,3 +12,7 @@
   background: #643c7d;
   color: #eee;
 }
+
+.hide-ad{
+  display: none !important;
+}

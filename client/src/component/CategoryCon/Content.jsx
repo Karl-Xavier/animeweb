@@ -7,7 +7,7 @@ export default function Content() {
 
     function getStyles(){
         const screen = window.innerWidth
-        const breakPoint = 768
+        const breakPoint = 765
         if(screen > breakPoint){
             return styles.epiBtn
         }else if(screen < breakPoint){

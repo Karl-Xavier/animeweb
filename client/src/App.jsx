@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css'
 import Header from './component/Header/Header'
@@ -16,9 +16,16 @@ import NotFound from './pages/NotFound'
 import { track } from '@vercel/analytics'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Register from './pages/Auth/Register'
+import Login from './pages/Auth/Login'
+import Verify from './component/AuthCon/Verify'
+import Confirm from './component/AuthCon/Confirm'
+import Profile from './pages/Profile/Profile'
+import EditProfile from './component/ProfileCon/EditProfile'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false)
+  const [ currentUser, setCurrentUser ] = useState(null)
 
   const location = useLocation()
 
@@ -27,20 +34,36 @@ function App() {
   }
 
   useEffect(()=>{ track(location.pathname) },[location])
-
+  useEffect(()=>{
+    const current = localStorage.getItem('currentUser')
+    if(current && current !== undefined){
+      setCurrentUser(current)
+    }
+  },[])
   
+
+  const regRoute = location.pathname.startsWith('/register')
+  const loginRoute = location.pathname.startsWith('/login')
+  const verifyRoute = location.pathname.startsWith('/verify')
+  const confirmationRoute = location.pathname.startsWith('/confirmation')
 
   return (
     <div className='mainCol w-full h-dvh' style={styles.container}>
       <ToastContainer theme='dark'/>
-      <div className="hidden md:hidden lg:block">
+      {!(regRoute || loginRoute || confirmationRoute || verifyRoute) && (<div className="hidden md:hidden lg:block">
         <SideNav  isNavOpen={isNavOpen} toggleSlider={toggleNavVisibility} setIsNavOpen={setIsNavOpen}/>
-      </div>
+      </div>)}
       <div style={isNavOpen ? styles.mainContentClosed: styles.mainContentOpen} className='container'>
-       <Header/>
+       {!(regRoute || loginRoute || confirmationRoute || verifyRoute) && <Header/>}
         <div className='min-h-full'>
           <Routes>
             <Route path='/' element={<Home/>}/>
+            <Route path='/register' element={currentUser ? <Navigate to={'/'}/> : <Register/>}/>
+            <Route path='/login' element={currentUser ? <Navigate to={'/'}/> : <Login/>}/>
+            <Route path='/verify' element={currentUser ? <Navigate to={'/'}/> : <Verify/>}/>
+            <Route path='/confirmation' element={currentUser ? <Navigate to={'/'}/> : <Confirm/>}/>
+            <Route path='/profile' element={!currentUser ? <Navigate to={'/'}/> : <Profile/>}/>
+            <Route path='/edit' element={!currentUser ? <Navigate to={'/'}/> : <EditProfile/>}/>
             <Route path='/movies' element={<Movie/>}/>
             <Route path='/genre/:genre' element={<GenreResult/>}/>
             <Route path='/category/:name' element={<Category/>}/>
@@ -50,7 +73,7 @@ function App() {
             <Route path='*' element={<NotFound/>}/>
           </Routes>
         </div>
-        <Footer/>
+        {!(regRoute || loginRoute || confirmationRoute || verifyRoute) && <Footer/>}
       </div>
     </div>
   )

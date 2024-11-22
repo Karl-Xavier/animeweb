@@ -1,9 +1,13 @@
 import { Envelope, Eye, EyeClosed, User } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import axios from 'axios'
+import logo from '../../assets/animeTvlogo2.jpg'
 
 export default function RegCon() {
+
+    const navigate = useNavigate()
 
     function getStyles(){
         const screen = window.innerWidth
@@ -23,6 +27,16 @@ export default function RegCon() {
 
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
+    },[])
+
+    useEffect(()=>{
+        document.title = 'Register Your Account | Shonenstream'
+
+        const adContainer = document.getElementById('ad-container')
+        if(adContainer){
+            adContainer.remove()
+        }
+
     },[])
 
     const [ formData, setFormData ] = useState({
@@ -70,15 +84,56 @@ export default function RegCon() {
         }
     }
 
-    function showToat(){
-        toast.success('Sucess',{ position: 'top-right' })
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+    async function handleRegister(e){
+        e.preventDefault()
+        try {
+            if(formData.username === '' || formData.email === '' || formData.password === ''){
+                toast.error('All fields most be filled',{
+                    position: 'top-center'
+                })
+                return
+            }
+            const currentUser = localStorage.getItem('currentUser')
+            if(currentUser){
+                toast.error('A User is Currently Logged in on this device',{
+                    position: 'top-center'
+                })
+                return
+            }
+            const response = await axios.post(`${backendUrl}api/auth/sign-up`, formData)
+            const { id, message } = response.data
+            localStorage.setItem('currentUser', id)
+            toast.success(message,{
+                position: 'top-center'
+            })
+            setFormData({
+                username: '',
+                email: '',
+                password: '',
+                profileImg: ''
+            })
+            navigate('/verify')
+        } catch(err){
+            console.log('An Error Occurred',err)
+            toast.error(err.response.data.message,{
+                position: 'top-center'
+            })
+            setFormData({
+                username: '',
+                email: '',
+                password: '',
+                profileImg: ''
+            })
+        }
     }
 
   return (
     <div className='w-full h-dvh grid place-content-center'>
         <div style={currentStyles}>
-            <h2 className='mb-2'>REGISTER YOUR ACCOUNT</h2>
-        <form style={styles.form}>
+            <img src={logo} alt="" style={styles.logo}/>
+        <form style={styles.form} onSubmit={handleRegister}>
             <div className='w-full flex flex-col items-center'>
             <label htmlFor="img" style={styles.label}>
                 <img src={img} alt="" style={styles.img}/>
@@ -101,7 +156,7 @@ export default function RegCon() {
                 <input style={styles.input} type={isPasswordVisible ? 'text' : 'password'} placeholder='Password' name='password' className='placeholder-gray-800' onChange={inputChange} value={formData.password}/>
                 <button onClick={togglePassword} type='button'>{isPasswordVisible ? <Eye size={22}/> : <EyeClosed size={22}/>}</button>
             </div>
-            <button style={styles.button} type='button' onClick={showToat}>Register</button>
+            <button style={styles.button} type='submit'>Register</button>
         </form>
         <p>Already have an Account? <Link to={'/login'}>Login</Link></p>
         </div>
@@ -113,20 +168,22 @@ const styles = {
     largeCon:{
         width: '600px',
         height: 'auto',
-        background: '#634c7d',
+        background: '#242424',
         color: '#eee',
         padding: '10px',
         borderRadius: '5px',
-        textAlign: 'center'
+        textAlign: 'center',
+        boxShadow: '2px 2px 4px #555'
     },
     smallCon:{
-        width: '300px',
+        width: '340px',
         height: 'auto',
-        background: '#634c7d',
+        background: '#242424',
         color: '#eee',
         padding: '10px',
         borderRadius: '5px',
-        textAlign: 'center'
+        textAlign: 'center',
+        boxShadow: '2px 2px 4px #555'
     },
     form:{
         width: '100%', 
@@ -151,7 +208,7 @@ const styles = {
         color: '#242424'
     },
     button:{
-        background: '#242424',
+        background: '#634c7d',
         width: '120px',
         height: '40px',
         outline: 'none',
@@ -170,5 +227,10 @@ const styles = {
         height: '100%',
         borderRadius: '50%',
         objectFit: 'cover'
+    },
+    logo:{
+        width: '75px',
+        height: '75px',
+        mixBlendMode: 'color-dodge',
     }
 }
