@@ -103,6 +103,11 @@ export default function Content() {
         payload.link = link
         payload.imgUrl = imgUrl
         console.log(payload)
+        if(!id){
+            toast.error('Login / Signup to Bookmark',{
+                position: 'top-right'
+            })
+        }
         try {
             const response = await axios.post(`${backendUrl}api/bookmark/add?id=${id}`, payload)
             toast.success(response.data.message,{
@@ -133,7 +138,7 @@ export default function Content() {
                  </Link>
                  <div className='w-full h-auto flex flex-row justify-between items-center p-2' style={styles.bottomCard}>
                     <span style={styles.bottomSpan}>Ep {episode.episodeNum.replace('Episode','').trim()}</span>
-                    <button disabled={id ? false : true} onClick={() => addBookMark(episode.title, episode.episodeNum, episode.link, episode.imgURL)}><Bookmark size={23} weight={isBookmarked(episode.title) ? 'fill' : 'bold'} color={isBookmarked(episode.title) ? '#634c7d' : 'white'}/></button>
+                    <button onClick={() => addBookMark(episode.title, episode.episodeNum, episode.link, episode.imgURL)}><Bookmark size={23} weight={isBookmarked(episode.title) ? 'fill' : 'bold'} color={isBookmarked(episode.title) ? '#634c7d' : 'white'}/></button>
                  </div>
                  </div>
                 )
